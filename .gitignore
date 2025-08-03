@@ -3,3 +3,6 @@
 
 # Build directories
 target/
+
+# IDE files
+.vscode/
