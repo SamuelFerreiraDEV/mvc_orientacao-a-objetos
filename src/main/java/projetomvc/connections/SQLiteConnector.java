@@ -20,18 +20,18 @@ public class SQLiteConnector {
   }
 
   private void createDefaultTables() throws SQLException {
-    String autorTableSQL = "CREATE TABLE IF NOT EXISTS autor (" +
+    String autorTableSQL = "CREATE TABLE IF NOT EXISTS author (" +
                             "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                            "nome TEXT NOT NULL," +
-                            "cidade_natal TEXT NOT NULL," +
-                            "data_nascimento DATETIME NOT NULL" +
+                            "name TEXT NOT NULL," +
+                            "hometown TEXT NOT NULL," +
+                            "birth_date DATETIME NOT NULL" +
                             ");";
     
-    String livroTableSQL = "CREATE TABLE IF NOT EXISTS livro (" +
+    String livroTableSQL = "CREATE TABLE IF NOT EXISTS book (" +
                             "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                            "titulo TEXT NOT NULL," +
-                            "autor_id INTEGER NOT NULL REFERENCES autor(id)," +
-                            "ano INTEGER NOT NULL" +
+                            "title TEXT NOT NULL," +
+                            "author_id INTEGER NOT NULL REFERENCES autor(id)," +
+                            "published_year INTEGER NOT NULL" +
                             ");";
 
     try(Statement stmt = connection.createStatement()) {
