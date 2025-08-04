@@ -7,12 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import projetomvc.models.dao.Interfaces.DAO;
 import projetomvc.models.entities.Book;
 
-public class BookDAOdb implements BookIDAO  {
+public class DatabaseBookDAO implements DAO<Book>  {
     private Connection connection;
 
-    public BookDAOdb(Connection connection) {
+    public DatabaseBookDAO(Connection connection) {
       	this.connection = connection;
     }
 
