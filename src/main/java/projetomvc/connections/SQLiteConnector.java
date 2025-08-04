@@ -30,7 +30,7 @@ public class SQLiteConnector {
     String livroTableSQL = "CREATE TABLE IF NOT EXISTS book (" +
                             "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                             "title TEXT NOT NULL," +
-                            "author_id INTEGER NOT NULL REFERENCES autor(id)," +
+                            "author_id INTEGER NOT NULL REFERENCES author(id)," +
                             "published_year INTEGER NOT NULL" +
                             ");";
 

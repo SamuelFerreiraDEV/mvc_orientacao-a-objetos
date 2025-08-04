@@ -1,0 +1,107 @@
+package projetomvc.models.dao.book;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import projetomvc.models.entities.Book;
+
+public class BookDAOdb implements BookIDAO  {
+    private Connection connection;
+
+    public BookDAOdb(Connection connection) {
+      	this.connection = connection;
+    }
+
+    @Override
+	public boolean save(Book book) throws SQLException {
+		String sql = "INSERT INTO book (title, author_id, published_year) VALUES (?, ?, ?)";
+
+		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+			stmt.setString(1, book.getTitle());
+			stmt.setInt(2, book.getAuthorId());
+			stmt.setInt(3, book.getPublishedYear());
+
+			int rowsAffected = stmt.executeUpdate();
+			return rowsAffected > 0;
+		} catch (SQLException e) {
+			throw e;
+		}
+    }
+
+	@Override
+	public boolean update(int bookId, Book book) throws SQLException {
+		String sql = "UPDATE book SET title = ?, author_id = ?, published_year = ? WHERE id = ?";
+
+		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+			stmt.setString(1, book.getTitle());
+			stmt.setInt(2, book.getAuthorId());
+			stmt.setInt(3, book.getPublishedYear());
+			stmt.setInt(4, bookId);
+
+			int rowsAffected =  stmt.executeUpdate();
+			return rowsAffected > 0;
+		} catch (SQLException e) {
+			throw e;
+		}
+	}
+	
+	@Override
+	public boolean delete(int bookId) throws SQLException {
+		String sql = "DELETE FROM book WHERE id = ?";
+		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+			stmt.setInt(1, bookId);
+	
+			int rowsAffected =  stmt.executeUpdate();
+			return rowsAffected > 0;
+		} catch (SQLException e) {
+			throw e;
+		}
+	}
+
+	@Override
+	public Book find(int bookId) throws SQLException {
+		String sql = "SELECT * FROM book WHERE id = ?";
+		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+			stmt.setInt(1, bookId);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				return new Book(
+					rs.getInt("id"),
+					rs.getString("title"),
+					rs.getInt("author_id"),
+					rs.getInt("published_year")
+				);
+			}
+		} catch (SQLException e) {
+			throw e;
+		}
+		return null;
+	}
+
+	@Override
+	public List<Book> findAll() throws SQLException {
+		String sql = "SELECT * FROM book;";
+		
+		try(PreparedStatement stmt = connection.prepareStatement(sql)) {
+			ResultSet rs = stmt.executeQuery();
+
+			List<Book> books = new ArrayList<>();
+			while (rs.next()) {
+				books.add( new Book(
+					rs.getInt("id"),
+					rs.getString("title"),
+					rs.getInt("author_id"),
+					rs.getInt("published_year")
+				));
+			}
+			
+			return books;
+		} catch (SQLException e) {
+			throw e;
+		}
+	}
+}
