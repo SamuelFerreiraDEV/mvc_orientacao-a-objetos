@@ -1,45 +1,53 @@
 package projetomvc.models.entities;
 
 public class Book {
+  private Integer id;
   private String title;
-  private Author author;
+  private Integer authorId;
   private Integer publishedYear;
 
   public Book() {
+    this.id = null;
     this.title = "";
-    this.author = null;
+    this.authorId = null;
     this.publishedYear = null;
   }
 
-  public Book(String title, Author author, Integer publishedYear) {
+  public Book(Integer id, String title, Integer authorId, Integer publishedYear) {
+    this.id = id;
     this.title = title;
-    this.author = author;
+    this.authorId = authorId;
     this.publishedYear = publishedYear;
   }
 
   public Book(Book other) {
+    this.id = other.getId();
     this.title = other.getTitle();
-    this.author = other.getAuthor();
+    this.authorId = other.getAuthorId();
     this.publishedYear = other.getPublishedYear();
   }
 
   public void copy(Book other) {
+    this.id = other.getId();
     this.title = other.getTitle();
-    this.author = other.getAuthor();
+    this.authorId = other.getAuthorId();
     this.publishedYear = other.getPublishedYear();
   }
 
   @Override
   public String toString() {
-    return "Livro [title=" + title + ", author=" + author + ", publishedYear=" + publishedYear + "]";
+    return "Livro [id=" + id + ", title=" + title + ", authorId=" + authorId + ", publishedYear=" + publishedYear + "]";
   }
+
+  
 
   @Override
   public int hashCode() {
     final int prime = 31;
     int result = 1;
+    result = prime * result + ((id == null) ? 0 : id.hashCode());
     result = prime * result + ((title == null) ? 0 : title.hashCode());
-    result = prime * result + ((author == null) ? 0 : author.hashCode());
+    result = prime * result + ((authorId == null) ? 0 : authorId.hashCode());
     result = prime * result + ((publishedYear == null) ? 0 : publishedYear.hashCode());
     return result;
   }
@@ -53,15 +61,20 @@ public class Book {
     if (getClass() != obj.getClass())
       return false;
     Book other = (Book) obj;
+    if (id == null) {
+      if (other.id != null)
+        return false;
+    } else if (!id.equals(other.id))
+      return false;
     if (title == null) {
       if (other.title != null)
         return false;
     } else if (!title.equals(other.title))
       return false;
-    if (author == null) {
-      if (other.author != null)
+    if (authorId == null) {
+      if (other.authorId != null)
         return false;
-    } else if (!author.equals(other.author))
+    } else if (!authorId.equals(other.authorId))
       return false;
     if (publishedYear == null) {
       if (other.publishedYear != null)
@@ -71,24 +84,32 @@ public class Book {
     return true;
   }
 
+  public Integer getId() {
+    return id;
+  }
+
   public String getTitle() {
     return title;
   }
   
-  public Author getAuthor() {
-    return author;
+  public Integer getAuthorId() {
+    return authorId;
   }
 
   public Integer getPublishedYear() {
     return publishedYear;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
   }
   
   public void setTitle(String title) {
     this.title = title;
   }
   
-  public void setAuthor(Author author) {
-    this.author = author;
+  public void setAuthorId(Integer authorId) {
+    this.authorId = authorId;
   }
 
   public void setPublishedYear(Integer publishedYear) {
