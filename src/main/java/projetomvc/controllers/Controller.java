@@ -1,14 +1,17 @@
 package projetomvc.controllers;
 
 import projetomvc.models.dao.interfaces.DAO;
+import projetomvc.validators.interfaces.Validator;
 
 import java.util.List;
 
 public abstract class Controller<T> {
     protected final DAO<T> dao;
+    protected final Validator<T> validator;
 
-    public Controller(DAO<T> dao) {
+    public Controller(DAO<T> dao, Validator<T> validator) {
         this.dao = dao;
+        this.validator = validator;
     }
 
     public abstract List<T> index();
