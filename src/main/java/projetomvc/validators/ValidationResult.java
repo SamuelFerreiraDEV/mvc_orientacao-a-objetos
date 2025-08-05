@@ -17,7 +17,7 @@ public class ValidationResult {
         errors.add(error);
     }
 
-    public boolean valid() {
+    public boolean isValid() {
         return valid;
     }
 
