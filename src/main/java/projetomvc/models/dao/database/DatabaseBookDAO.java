@@ -1,4 +1,4 @@
-package projetomvc.models.dao.book;
+package projetomvc.models.dao.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,14 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import projetomvc.models.dao.interfaces.DAO;
 import projetomvc.models.entities.Book;
 
-public class DatabaseBookDAO implements DAO<Book>  {
-    private Connection connection;
+public class DatabaseBookDAO extends databaseDAO<Book> {
 
     public DatabaseBookDAO(Connection connection) {
-      	this.connection = connection;
+      	super(connection);
     }
 
     @Override
