@@ -4,6 +4,8 @@
  */
 package projetomvc.views;
 
+import javax.swing.JTextField;
+
 /**
  *
  * @author samuel
@@ -11,12 +13,13 @@ package projetomvc.views;
 public class BooksView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BooksView.class.getName());
-
+    private JTextField[] textFields;
     /**
      * Creates new form BooksView
      */
     public BooksView() {
         initComponents();
+        textFields = new JTextField[] {this.fieldTitle, this.fieldAuthor, this.fieldPublishedYear};
     }
 
     /**
@@ -41,7 +44,7 @@ public class BooksView extends javax.swing.JFrame {
         labelAuthor = new javax.swing.JLabel();
         fieldAuthor = new javax.swing.JTextField();
         labelPublishedYear = new javax.swing.JLabel();
-        textPublishedYear = new javax.swing.JTextField();
+        fieldPublishedYear = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
@@ -80,6 +83,11 @@ public class BooksView extends javax.swing.JFrame {
 
         buttonCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cancel_32x32.png"))); // NOI18N
         buttonCancel.setText("Cancelar");
+        buttonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCancelActionPerformed(evt);
+            }
+        });
         panelButtons.add(buttonCancel);
 
         buttonSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/save_32x32.png"))); // NOI18N
@@ -94,33 +102,21 @@ public class BooksView extends javax.swing.JFrame {
 
         fieldTitle.setBackground(new java.awt.Color(255, 255, 255));
         fieldTitle.setForeground(new java.awt.Color(0, 0, 0));
-        fieldTitle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldTitleActionPerformed(evt);
-            }
-        });
+        fieldTitle.setEnabled(false);
 
         labelAuthor.setForeground(new java.awt.Color(0, 0, 0));
         labelAuthor.setText("Autor:");
 
         fieldAuthor.setBackground(new java.awt.Color(255, 255, 255));
         fieldAuthor.setForeground(new java.awt.Color(0, 0, 0));
-        fieldAuthor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldAuthorActionPerformed(evt);
-            }
-        });
+        fieldAuthor.setEnabled(false);
 
         labelPublishedYear.setForeground(new java.awt.Color(0, 0, 0));
         labelPublishedYear.setText("Ano de publicação:");
 
-        textPublishedYear.setBackground(new java.awt.Color(255, 255, 255));
-        textPublishedYear.setForeground(new java.awt.Color(0, 0, 0));
-        textPublishedYear.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textPublishedYearActionPerformed(evt);
-            }
-        });
+        fieldPublishedYear.setBackground(new java.awt.Color(255, 255, 255));
+        fieldPublishedYear.setForeground(new java.awt.Color(0, 0, 0));
+        fieldPublishedYear.setEnabled(false);
 
         javax.swing.GroupLayout panelInputLayout = new javax.swing.GroupLayout(panelInput);
         panelInput.setLayout(panelInputLayout);
@@ -140,19 +136,20 @@ public class BooksView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelPublishedYear)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textPublishedYear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fieldPublishedYear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelInputLayout.setVerticalGroup(
             panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInputLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelTitle)
-                    .addComponent(fieldTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(labelPublishedYear)
-                        .addComponent(textPublishedYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(fieldPublishedYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelTitle)
+                        .addComponent(fieldTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelAuthor)
@@ -204,20 +201,27 @@ public class BooksView extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
-        // TODO add your handling code here:
+        this.enableFields(true);
+        this.clearTextFields();
     }//GEN-LAST:event_buttonNewActionPerformed
 
-    private void fieldTitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldTitleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldTitleActionPerformed
+    private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
+        this.clearTextFields();
+        this.enableFields(false);
+    }//GEN-LAST:event_buttonCancelActionPerformed
 
-    private void fieldAuthorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldAuthorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fieldAuthorActionPerformed
 
-    private void textPublishedYearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textPublishedYearActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textPublishedYearActionPerformed
+    private void clearTextFields() {
+        for(JTextField field : textFields) {
+            field.setText("");
+        }
+    }
+
+    private void enableFields(boolean flag) {
+        for(JTextField field : textFields) {
+            field.setEnabled(flag);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancel;
@@ -226,6 +230,7 @@ public class BooksView extends javax.swing.JFrame {
     private javax.swing.JButton buttonNew;
     private javax.swing.JButton buttonSave;
     private javax.swing.JTextField fieldAuthor;
+    private javax.swing.JTextField fieldPublishedYear;
     private javax.swing.JTextField fieldTitle;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
@@ -235,6 +240,5 @@ public class BooksView extends javax.swing.JFrame {
     private javax.swing.JLabel labelTitle;
     private javax.swing.JPanel panelButtons;
     private javax.swing.JPanel panelInput;
-    private javax.swing.JTextField textPublishedYear;
     // End of variables declaration//GEN-END:variables
 }
