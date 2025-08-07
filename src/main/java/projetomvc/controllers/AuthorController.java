@@ -35,6 +35,16 @@ public class AuthorController extends Controller<Author> {
     }
 
     @Override
+    public Author show(String name) {
+        try {
+            return dao.find(name);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public Author newForm() {
         return new Author();
     }

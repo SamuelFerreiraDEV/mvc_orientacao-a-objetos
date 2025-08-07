@@ -82,6 +82,26 @@ public class DatabaseBookDAO extends databaseDAO<Book> {
 	}
 
 	@Override
+	public Book find(String title) throws SQLException {
+		String sql = "SELECT * FROM book WHERE title = ? LIMIT 1";
+		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+			stmt.setString(1, title);
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				return new Book(
+					rs.getInt("id"),
+					rs.getString("title"),
+					rs.getInt("author_id"),
+					rs.getInt("published_year")
+				);
+			}
+		} catch (SQLException e) {
+			throw e;
+		}
+		return null;
+	}
+
+	@Override
 	public List<Book> findAll() throws SQLException {
 		String sql = "SELECT * FROM book;";
 		

@@ -35,6 +35,16 @@ public class BookController extends Controller<Book> {
     }
 
     @Override
+    public Book show(String title) {
+        try {
+            return dao.find(title);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
     public Book newForm() {
         return new Book();
     }
