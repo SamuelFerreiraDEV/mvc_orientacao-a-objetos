@@ -80,7 +80,7 @@ public class BookController extends Controller<Book> {
     public boolean update(int id, Book book) {
         ValidationResult bookValidation = validator.validate(book);
 
-        if (bookValidation.isValid()) {
+        if (!bookValidation.isValid()) {
             System.err.println(bookValidation.getErrorsAsString());
             return false;
         }

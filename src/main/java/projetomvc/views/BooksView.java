@@ -4,6 +4,7 @@
  */
 package projetomvc.views;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import projetomvc.controllers.Controller;
@@ -230,6 +231,40 @@ public class BooksView extends javax.swing.JFrame {
             field.setEnabled(flag);
         }
     }
+
+    private boolean anyFieldEmpty() {
+        for(JTextField f : textFields) {
+            if (f == null || f.getText() == null || f.getText().trim().isEmpty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isYearValid() {
+        String year = this.fieldPublishedYear.getText();
+        try {
+            int y = Integer.parseInt(year);
+            return y > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean fieldsValid() {
+        if (this.anyFieldEmpty()) {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos.", "Validação", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        
+        if (!this.isYearValid()) {
+            JOptionPane.showMessageDialog(this, "Ano inválido.", "Validação", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCancel;

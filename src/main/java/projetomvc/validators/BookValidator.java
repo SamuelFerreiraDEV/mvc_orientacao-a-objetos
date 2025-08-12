@@ -22,8 +22,20 @@ public class BookValidator implements Validator<Book> {
             result.addError("Title cannot exceed 255 characters");
         }
         
-        if (book.getPublishedYear() == null) {
-            result.addError("Published year is required");
+        if (book.getAuthorId() == null) {
+            result.addError("Author ID is required");
+        }
+
+        if (book.getAuthorId() != null && book.getAuthorId() < 0) {
+            result.addError("Author ID invalid.");
+        }
+        
+        if (book.getPublishedYear() != null && book.getPublishedYear() < 0) {
+            result.addError("Published year is invalid");
+        }
+        
+        if (book.getPublishedYear() != null && book.getPublishedYear() < 0) {
+            result.addError("Published year is invalid");
         }
         
         return result;
