@@ -6,6 +6,10 @@ package projetomvc.views;
 
 import javax.swing.JTextField;
 
+import projetomvc.controllers.Controller;
+import projetomvc.models.entities.Author;
+import projetomvc.models.entities.Book;
+
 /**
  *
  * @author samuel
@@ -14,12 +18,16 @@ public class BooksView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BooksView.class.getName());
     private JTextField[] textFields;
+    private Controller<Author> authorController;
+    private Controller<Book> bookController;
     /**
      * Creates new form BooksView
      */
-    public BooksView() {
+    public BooksView(Controller<Author> authorController, Controller<Book> bookController) {
         initComponents();
-        textFields = new JTextField[] {this.fieldTitle, this.fieldAuthor, this.fieldPublishedYear};
+        this.textFields = new JTextField[] {this.fieldTitle, this.fieldAuthor, this.fieldPublishedYear};
+        this.authorController = authorController;
+        this.bookController = bookController;
     }
 
     /**

@@ -63,7 +63,7 @@ public class BookController extends Controller<Book> {
     public boolean create(Book book) {
         ValidationResult bookValidation = validator.validate(book);
 
-        if (bookValidation.isValid()) {
+        if (!bookValidation.isValid()) {
             System.err.println(bookValidation.getErrorsAsString());
             return false;
         }

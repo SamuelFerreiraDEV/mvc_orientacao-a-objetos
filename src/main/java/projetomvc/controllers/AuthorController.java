@@ -63,7 +63,7 @@ public class AuthorController extends Controller<Author> {
     public boolean create(Author author) {
         ValidationResult authorValidation = validator.validate(author);
 
-        if (authorValidation.isValid()) {
+        if (!authorValidation.isValid()) {
             System.err.println(authorValidation.getErrorsAsString());
             return false;
         }

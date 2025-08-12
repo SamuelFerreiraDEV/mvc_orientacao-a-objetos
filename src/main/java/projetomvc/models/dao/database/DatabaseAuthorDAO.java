@@ -63,7 +63,7 @@ public class DatabaseAuthorDAO extends databaseDAO<Author>  {
 
 	@Override
 	public Author find(int authorId) throws SQLException {
-		String sql = "SELECT * FROM author WHERE id = ?";
+		String sql = "SELECT * FROM author WHERE id = ? LIMIT 1";
 		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setInt(1, authorId);
 			ResultSet rs = stmt.executeQuery();
