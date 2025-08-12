@@ -101,6 +101,11 @@ public class BooksView extends javax.swing.JFrame {
 
         buttonSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/save_32x32.png"))); // NOI18N
         buttonSave.setText("Salvar");
+        buttonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSaveActionPerformed(evt);
+            }
+        });
         panelButtons.add(buttonSave);
 
         panelInput.setBackground(new java.awt.Color(204, 204, 204));
@@ -219,6 +224,34 @@ public class BooksView extends javax.swing.JFrame {
         this.enableFields(false);
     }//GEN-LAST:event_buttonCancelActionPerformed
 
+    private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+        if(this.fieldsValid()) {
+            Book book = buildBookFromInputs();
+            this.bookController.create(book);
+            this.enableFields(false);
+            this.clearTextFields();
+        }
+
+    }//GEN-LAST:event_buttonSaveActionPerformed
+
+    private Book buildBookFromInputs() {
+        Book book = new Book();
+        int authorId = this.getAuthorIdByName(this.fieldAuthor.getText());
+
+        book.setTitle(this.fieldTitle.getText());
+        book.setAuthorId(authorId);
+        book.setPublishedYear(Integer.parseInt(this.fieldPublishedYear.getText()));
+
+        return book;
+    }
+
+    public int getAuthorIdByName(String name) {
+        Author author = this.authorController.show(name);
+        if (author != null) {
+            return author.getId();
+        }
+        return -1;
+    }
 
     private void clearTextFields() {
         for(JTextField field : textFields) {
