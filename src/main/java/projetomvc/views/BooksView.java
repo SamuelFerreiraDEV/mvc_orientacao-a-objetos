@@ -55,7 +55,7 @@ public class BooksView extends javax.swing.JFrame {
         labelPublishedYear = new javax.swing.JLabel();
         fieldPublishedYear = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        textAreaResult = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -171,10 +171,10 @@ public class BooksView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTextArea1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        textAreaResult.setBackground(new java.awt.Color(255, 255, 255));
+        textAreaResult.setColumns(20);
+        textAreaResult.setRows(5);
+        jScrollPane1.setViewportView(textAreaResult);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -227,9 +227,10 @@ public class BooksView extends javax.swing.JFrame {
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         if(this.fieldsValid()) {
             Book book = buildBookFromInputs();
-            this.bookController.create(book);
+            boolean created = this.bookController.create(book);
             this.enableFields(false);
             this.clearTextFields();
+            this.setResultText("save", created, book);
         }
 
     }//GEN-LAST:event_buttonSaveActionPerformed
@@ -263,6 +264,23 @@ public class BooksView extends javax.swing.JFrame {
         for(JTextField field : textFields) {
             field.setEnabled(flag);
         }
+    }
+
+    private void setResultText(String action, boolean success, Book book) {
+        String result = "";
+        switch (action) {
+            case "save":
+                result = success ? "Livro salvo: " + book.getTitle() : "Erro ao salvar livro.";
+                break;
+            case "edit":
+                result = success ? "Livro editado: " + book.getTitle() : "Erro ao editar livro.";
+                break;
+            case "delete":
+                result = success ? "Livro removido: " + book.getTitle() : "Erro ao remover livro.";
+                break;
+        }
+        this.textAreaResult.setText(result);
+        
     }
 
     private boolean anyFieldEmpty() {
@@ -309,12 +327,12 @@ public class BooksView extends javax.swing.JFrame {
     private javax.swing.JTextField fieldPublishedYear;
     private javax.swing.JTextField fieldTitle;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel labelAuthor;
     private javax.swing.JLabel labelHeader;
     private javax.swing.JLabel labelPublishedYear;
     private javax.swing.JLabel labelTitle;
     private javax.swing.JPanel panelButtons;
     private javax.swing.JPanel panelInput;
+    private javax.swing.JTextArea textAreaResult;
     // End of variables declaration//GEN-END:variables
 }
