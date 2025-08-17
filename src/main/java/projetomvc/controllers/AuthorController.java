@@ -35,7 +35,7 @@ public class AuthorController extends Controller<Author> {
     }
 
     @Override
-    public Author show(String name) {
+    public List<Author> show(String name) {
         try {
             return dao.find(name);
         } catch (SQLException e) {

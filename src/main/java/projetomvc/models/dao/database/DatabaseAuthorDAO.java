@@ -82,23 +82,26 @@ public class DatabaseAuthorDAO extends databaseDAO<Author>  {
 	}
 
 	@Override
-	public Author find(String name) throws SQLException {
-		String sql = "SELECT * FROM author WHERE name = ? LIMIT 1";
+	public List<Author> find(String name) throws SQLException {
+		String sql = "SELECT * FROM author WHERE name = ?";
 		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setString(1, name);
 			ResultSet rs = stmt.executeQuery();
-			if(rs.next()) {
-				return new Author(
+
+			List<Author> authors = new ArrayList<>();
+			while(rs.next()) {
+				authors.add(new Author(
 					rs.getInt("id"),
 					rs.getString("name"),
 					rs.getString("hometown"),
 					rs.getInt("birth_date")
-				);
+				));
 			}
+
+			return authors;
 		} catch (SQLException e) {
 			throw e;
 		}
-		return null;
 	}
 
 	@Override
