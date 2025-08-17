@@ -83,9 +83,9 @@ public class DatabaseBookDAO extends databaseDAO<Book> {
 
 	@Override
 	public List<Book> find(String title) throws SQLException {
-		String sql = "SELECT * FROM book WHERE title = ?";
+		String sql = "SELECT * FROM book WHERE title LIKE ?";
 		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-			stmt.setString(1, title);
+			stmt.setString(1, "%" + title + "%");
 			ResultSet rs = stmt.executeQuery();
 			
 			List<Book> books = new ArrayList<>();
