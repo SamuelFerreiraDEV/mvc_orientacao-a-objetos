@@ -93,6 +93,7 @@ public class BooksView extends javax.swing.JFrame {
 
         buttonEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edit3_32x32.png"))); // NOI18N
         buttonEdit.setText("Editar");
+        buttonEdit.setEnabled(false);
         buttonEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonEditActionPerformed(evt);
@@ -191,6 +192,12 @@ public class BooksView extends javax.swing.JFrame {
         textAreaResult.setColumns(20);
         textAreaResult.setRows(5);
         jScrollPane1.setViewportView(textAreaResult);
+
+        ListSearchResult.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                ListSearchResultValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(ListSearchResult);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -229,9 +236,7 @@ public class BooksView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
-        String selectedBook = this.ListSearchResult.getSelectedValue();
-        if (selectedBook != null) {
-            this.selectedBookId = Integer.parseInt(selectedBook.split(":")[0]);
+        if (this.selectedBookId != null) {
             Book book = bookController.show(this.selectedBookId);
             String authorName = authorController.show(book.getAuthorId()).getName();
 
@@ -303,6 +308,17 @@ public class BooksView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Livro não encontrado.", "Busca", JOptionPane.INFORMATION_MESSAGE);
         }   
     }//GEN-LAST:event_buttonSearchActionPerformed
+
+    private void ListSearchResultValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListSearchResultValueChanged
+        String value = this.ListSearchResult.getSelectedValue();
+        if (value != null && !value.trim().isEmpty()) {
+            this.selectedBookId = Integer.parseInt(value.split(":")[0]);
+            this.buttonEdit.setEnabled(true);
+        } else {
+            this.buttonEdit.setEnabled(false);
+            this.selectedBookId = null;
+        }
+    }//GEN-LAST:event_ListSearchResultValueChanged
 
     private Book buildBookFromInputs() {
         Book book = new Book();
