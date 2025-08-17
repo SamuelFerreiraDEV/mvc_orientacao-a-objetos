@@ -103,6 +103,7 @@ public class BooksView extends javax.swing.JFrame {
 
         buttonDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/del_32x32.png"))); // NOI18N
         buttonDelete.setText("Excluir");
+        buttonDelete.setEnabled(false);
         buttonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonDeleteActionPerformed(evt);
@@ -253,7 +254,19 @@ public class BooksView extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonEditActionPerformed
 
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
-        // TODO add your handling code here:
+        if (this.selectedBookId != null) {
+            Book book = bookController.show(this.selectedBookId);
+            boolean deleted = this.bookController.delete(this.selectedBookId);
+            this.displayActionResultText("delete", deleted, book);
+            this.displayBooks(false, true);
+            this.selectedBookId = null;
+            this.booksList.clearSelection();
+        } else {
+            JOptionPane.showMessageDialog(this, 
+                "Selecione um livro da lista para remover.", 
+                "Remoção", 
+                JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
