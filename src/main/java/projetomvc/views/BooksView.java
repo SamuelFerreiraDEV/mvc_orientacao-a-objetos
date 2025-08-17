@@ -60,9 +60,9 @@ public class BooksView extends javax.swing.JFrame {
         labelPublishedYear = new javax.swing.JLabel();
         fieldPublishedYear = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        textAreaResult = new javax.swing.JTextArea();
+        actionResultArea = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        ListSearchResult = new javax.swing.JList<>();
+        booksList = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -188,17 +188,17 @@ public class BooksView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        textAreaResult.setBackground(new java.awt.Color(255, 255, 255));
-        textAreaResult.setColumns(20);
-        textAreaResult.setRows(5);
-        jScrollPane1.setViewportView(textAreaResult);
+        actionResultArea.setBackground(new java.awt.Color(255, 255, 255));
+        actionResultArea.setColumns(20);
+        actionResultArea.setRows(5);
+        jScrollPane1.setViewportView(actionResultArea);
 
-        ListSearchResult.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        booksList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                ListSearchResultValueChanged(evt);
+                booksListValueChanged(evt);
             }
         });
-        jScrollPane2.setViewportView(ListSearchResult);
+        jScrollPane2.setViewportView(booksList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -266,23 +266,22 @@ public class BooksView extends javax.swing.JFrame {
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         if(this.fieldsValid()) {
-            List<Book> books = new ArrayList<>();
-            books.add(buildBookFromInputs());
-            boolean saved = false;
+            Book book = buildBookFromInputs();
+            boolean persisted = false;
             String action = null;
 
             if (this.selectedBookId != null) {
-                saved = this.bookController.update(this.selectedBookId, books.get(0));
+                persisted = this.bookController.update(this.selectedBookId, book);
                 action = "update";
                 this.selectedBookId = null;
-                this.ListSearchResult.clearSelection();
+                this.booksList.clearSelection();
             } else {
-                saved = this.bookController.create(books.get(0));
+                persisted = this.bookController.create(book);
                 action = "save";
             }
 
             this.clearTextFields();
-            this.setResultText(action, saved, books);
+            this.displayActionResultText(action, persisted, book);
         } else {
             JOptionPane.showMessageDialog(this, "Preencha todos os campos corretamente.", "Validação", JOptionPane.WARNING_MESSAGE);
         }
@@ -295,30 +294,55 @@ public class BooksView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Preencha o título do livro.", "Validação", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
-        List<Book> books = this.bookController.show(title);
-        if (books != null && !books.isEmpty()) {
-            this.clearTextFields();
-            this.textAreaResult.setText("Livros encontrados:\n");
-            for (Book book : books) {
-                this.textAreaResult.append("Título: " + book.getTitle() + ", Autor: " + authorController.show(book.getAuthorId()).getName() + ", Ano: " + book.getPublishedYear() + "\n");
-            }
-            this.ListSearchResult.setListData(books.stream().map(b -> b.getId() + ": " + b.getTitle()).toArray(String[]::new));
-        } else {
-            JOptionPane.showMessageDialog(this, "Livro não encontrado.", "Busca", JOptionPane.INFORMATION_MESSAGE);
-        }   
+        this.displayBooks(true, true);
     }//GEN-LAST:event_buttonSearchActionPerformed
 
-    private void ListSearchResultValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListSearchResultValueChanged
-        String value = this.ListSearchResult.getSelectedValue();
+    private void displayBooks(boolean updateActionResultArea, boolean updateBooksList) {
+        List<Book> books = this.searchBooks();
+        if (updateActionResultArea) {
+            setBooksResult(books);
+        }
+        if (updateBooksList) {
+            this.updateBooksList(books);
+        }
+    }
+    private List<Book> searchBooks() {
+        String title = this.fieldTitle.getText();
+        List<Book> books = this.bookController.show(title);
+        if (books != null && !books.isEmpty()) {
+            return books;
+        } else {
+            JOptionPane.showMessageDialog(this, "Livro não encontrado.", "Busca", JOptionPane.INFORMATION_MESSAGE);
+            return null;
+        }
+    }
+
+    private void setBooksResult(List<Book> books) {
+        if (books != null && !books.isEmpty()) {
+            this.clearTextFields();
+            this.actionResultArea.setText("Livros encontrados:\n");
+            for (Book book : books) {
+                this.actionResultArea.append("Título: " + book.getTitle() + ", Autor: " + authorController.show(book.getAuthorId()).getName() + ", Ano: " + book.getPublishedYear() + "\n");
+            }
+        }
+    }
+
+    private void updateBooksList(List<Book> books) {
+        this.booksList.setListData(books.stream().map(b -> b.getId() + ": " + b.getTitle()).toArray(String[]::new));
+    }
+
+    private void booksListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_booksListValueChanged
+        String value = this.booksList.getSelectedValue();
         if (value != null && !value.trim().isEmpty()) {
             this.selectedBookId = Integer.parseInt(value.split(":")[0]);
             this.buttonEdit.setEnabled(true);
+            this.buttonDelete.setEnabled(true);
         } else {
             this.buttonEdit.setEnabled(false);
+            this.buttonDelete.setEnabled(false);
             this.selectedBookId = null;
         }
-    }//GEN-LAST:event_ListSearchResultValueChanged
+    }//GEN-LAST:event_booksListValueChanged
 
     private Book buildBookFromInputs() {
         Book book = new Book();
@@ -332,9 +356,9 @@ public class BooksView extends javax.swing.JFrame {
     }
 
     public int getAuthorIdByName(String name) {
-        List<Author> authors = this.authorController.show(name);
-        if (authors != null && !authors.isEmpty()) {
-            return authors.get(0).getId();
+        Author author = this.authorController.show(name).get(0);
+        if (author != null) {
+            return author.getId();
         }
         return -1;
     }
@@ -345,20 +369,20 @@ public class BooksView extends javax.swing.JFrame {
         }
     }
 
-    private void setResultText(String action, boolean success, List<Book> books) {
+    private void displayActionResultText(String action, boolean success, Book book) {
         String result = "";
         switch (action) {
             case "save":
-                result = success ? "Livro salvo: " + books.get(0).getTitle() : "Erro ao salvar livro.";
+                result = success ? "Livro salvo: " + book.getTitle() : "Erro ao salvar livro.";
                 break;
             case "update":
-                result = success ? "Livro editado: " + books.get(0).getTitle() : "Erro ao editar livro.";
+                result = success ? "Livro editado: " + book.getTitle() : "Erro ao editar livro.";
                 break;
             case "delete":
-                result = success ? "Livro removido: " + books.get(0).getTitle() : "Erro ao remover livro.";
+                result = success ? "Livro removido: " + book.getTitle() : "Erro ao remover livro.";
                 break;
         }
-        this.textAreaResult.setText(result);
+        this.actionResultArea.setText(result);
         
     }
 
@@ -397,7 +421,7 @@ public class BooksView extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> ListSearchResult;
+    private javax.swing.JList<String> booksList;
     private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonEdit;
@@ -415,6 +439,6 @@ public class BooksView extends javax.swing.JFrame {
     private javax.swing.JLabel labelTitle;
     private javax.swing.JPanel panelButtons;
     private javax.swing.JPanel panelInput;
-    private javax.swing.JTextArea textAreaResult;
+    private javax.swing.JTextArea actionResultArea;
     // End of variables declaration//GEN-END:variables
 }
