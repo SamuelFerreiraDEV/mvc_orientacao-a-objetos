@@ -24,6 +24,7 @@ public class BooksView extends javax.swing.JFrame {
     private JTextField[] textFields;
     private Controller<Author> authorController;
     private Controller<Book> bookController;
+    private Integer selectedBookId = null;
     /**
      * Creates new form BooksView
      */
@@ -228,7 +229,22 @@ public class BooksView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
-        // TODO add your handling code here:
+        String selectedBook = this.ListSearchResult.getSelectedValue();
+        if (selectedBook != null) {
+            this.selectedBookId = Integer.parseInt(selectedBook.split(":")[0]);
+            Book book = bookController.show(this.selectedBookId);
+            String authorName = authorController.show(book.getAuthorId()).getName();
+
+            this.fieldTitle.setText(book.getTitle());
+            this.fieldAuthor.setText(authorName);
+            this.fieldPublishedYear.setText(book.getPublishedYear().toString());
+        }
+        else {
+            JOptionPane.showMessageDialog(this, 
+                "Selecione um livro da lista para editar.", 
+                "Edição", 
+                JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_buttonEditActionPerformed
 
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
@@ -247,9 +263,23 @@ public class BooksView extends javax.swing.JFrame {
         if(this.fieldsValid()) {
             List<Book> books = new ArrayList<>();
             books.add(buildBookFromInputs());
-            boolean created = this.bookController.create(books.get(0));
+            boolean saved = false;
+            String action = null;
+
+            if (this.selectedBookId != null) {
+                saved = this.bookController.update(this.selectedBookId, books.get(0));
+                action = "update";
+                this.selectedBookId = null;
+                this.ListSearchResult.clearSelection();
+            } else {
+                saved = this.bookController.create(books.get(0));
+                action = "save";
+            }
+
             this.clearTextFields();
-            this.setResultText("save", created, books);
+            this.setResultText(action, saved, books);
+        } else {
+            JOptionPane.showMessageDialog(this, "Preencha todos os campos corretamente.", "Validação", JOptionPane.WARNING_MESSAGE);
         }
 
     }//GEN-LAST:event_buttonSaveActionPerformed
@@ -305,7 +335,7 @@ public class BooksView extends javax.swing.JFrame {
             case "save":
                 result = success ? "Livro salvo: " + books.get(0).getTitle() : "Erro ao salvar livro.";
                 break;
-            case "edit":
+            case "update":
                 result = success ? "Livro editado: " + books.get(0).getTitle() : "Erro ao editar livro.";
                 break;
             case "delete":
