@@ -288,11 +288,6 @@ public class BooksView extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
-        String title = this.fieldTitle.getText();
-        if (title == null || title.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Preencha o título do livro.", "Validação", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
         this.displayBooks(true, true);
     }//GEN-LAST:event_buttonSearchActionPerformed
 
@@ -305,6 +300,7 @@ public class BooksView extends javax.swing.JFrame {
             this.updateBooksList(books);
         }
     }
+
     private List<Book> searchBooks() {
         String title = this.fieldTitle.getText();
         List<Book> books = this.bookController.show(title);
@@ -327,7 +323,9 @@ public class BooksView extends javax.swing.JFrame {
     }
 
     private void updateBooksList(List<Book> books) {
-        this.booksList.setListData(books.stream().map(b -> b.getId() + ": " + b.getTitle()).toArray(String[]::new));
+        if (books != null && !books.isEmpty()) {
+            this.booksList.setListData(books.stream().map(b -> b.getId() + ": " + b.getTitle()).toArray(String[]::new));
+        }
     }
 
     private void booksListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_booksListValueChanged
