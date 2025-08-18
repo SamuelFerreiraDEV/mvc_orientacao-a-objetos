@@ -50,7 +50,6 @@ public class BooksView extends javax.swing.JFrame {
         buttonSearch = new javax.swing.JButton();
         buttonEdit = new javax.swing.JButton();
         buttonDelete = new javax.swing.JButton();
-        buttonCancel = new javax.swing.JButton();
         buttonSave = new javax.swing.JButton();
         panelInput = new javax.swing.JPanel();
         labelTitle = new javax.swing.JLabel();
@@ -110,15 +109,6 @@ public class BooksView extends javax.swing.JFrame {
             }
         });
         panelButtons.add(buttonDelete);
-
-        buttonCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cancel_32x32.png"))); // NOI18N
-        buttonCancel.setText("Cancelar");
-        buttonCancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonCancelActionPerformed(evt);
-            }
-        });
-        panelButtons.add(buttonCancel);
 
         buttonSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/save_32x32.png"))); // NOI18N
         buttonSave.setText("Salvar");
@@ -273,10 +263,6 @@ public class BooksView extends javax.swing.JFrame {
         this.clearTextFields();
     }//GEN-LAST:event_buttonNewActionPerformed
 
-    private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
-        this.clearTextFields();
-    }//GEN-LAST:event_buttonCancelActionPerformed
-
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         if(this.fieldsValid()) {
             Book book = buildBookFromInputs();
@@ -295,10 +281,7 @@ public class BooksView extends javax.swing.JFrame {
 
             this.clearTextFields();
             this.displayActionResultText(action, persisted, book);
-        } else {
-            JOptionPane.showMessageDialog(this, "Preencha todos os campos corretamente.", "Validação", JOptionPane.WARNING_MESSAGE);
         }
-
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
@@ -435,7 +418,6 @@ public class BooksView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> booksList;
-    private javax.swing.JButton buttonCancel;
     private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonEdit;
     private javax.swing.JButton buttonNew;
