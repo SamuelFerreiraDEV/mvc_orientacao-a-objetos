@@ -33,6 +33,7 @@ public class BooksView extends javax.swing.JFrame {
         this.textFields = new JTextField[] {this.fieldTitle, this.fieldAuthor, this.fieldPublishedYear};
         this.authorController = authorController;
         this.bookController = bookController;
+        this.displayBooks(true, true);
     }
 
     /**
@@ -261,6 +262,8 @@ public class BooksView extends javax.swing.JFrame {
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
         this.clearTextFields();
+        this.booksList.clearSelection();
+        this.selectedBookId = null;
     }//GEN-LAST:event_buttonNewActionPerformed
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
@@ -352,7 +355,7 @@ public class BooksView extends javax.swing.JFrame {
     }
 
     public int getAuthorIdByName(String name) {
-        Author author = this.authorController.show(name).get(0);
+        Author author = this.authorController.show(name).stream().findFirst().orElse(null);
         if (author != null) {
             return author.getId();
         }
