@@ -35,7 +35,7 @@ public class BookController extends Controller<Book> {
     }
 
     @Override
-    public List<Book> show(String title) {
+    public Book show(String title) {
         try {
             return dao.find(title);
         } catch (SQLException e) {

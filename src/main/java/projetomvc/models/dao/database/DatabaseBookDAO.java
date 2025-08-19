@@ -63,7 +63,7 @@ public class DatabaseBookDAO extends databaseDAO<Book> {
 
 	@Override
 	public Book find(int bookId) throws SQLException {
-		String sql = "SELECT * FROM book WHERE id = ? LIMIT 1";
+		String sql = "SELECT * FROM book WHERE id = ?";
 		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setInt(1, bookId);
 			ResultSet rs = stmt.executeQuery();
@@ -82,26 +82,23 @@ public class DatabaseBookDAO extends databaseDAO<Book> {
 	}
 
 	@Override
-	public List<Book> find(String title) throws SQLException {
+	public Book find(String title) throws SQLException {
 		String sql = "SELECT * FROM book WHERE title LIKE ?";
 		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setString(1, "%" + title + "%");
 			ResultSet rs = stmt.executeQuery();
-			
-			List<Book> books = new ArrayList<>();
-			while(rs.next()) {
-				books.add(new Book(
+			if(rs.next()) {
+				return new Book(
 					rs.getInt("id"),
 					rs.getString("title"),
 					rs.getInt("author_id"),
 					rs.getInt("published_year")
-				));
+				);
 			}
-
-			return books;
 		} catch (SQLException e) {
 			throw e;
 		}
+		return null;
 	}
 
 	@Override

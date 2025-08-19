@@ -16,7 +16,7 @@ public abstract class Controller<T> {
 
     public abstract List<T> index();
     public abstract T show(int id);
-    public abstract List<T> show(String string);
+    public abstract T show(String string);
     public abstract T newForm();
     public abstract T edit(int id);
     public abstract boolean create(T entity);
