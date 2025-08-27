@@ -5,6 +5,7 @@
 package projetomvc.views;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -302,14 +303,26 @@ public class BooksView extends javax.swing.JFrame {
     }
 
     private List<Book> searchBooks() {
-        String title = this.fieldTitle.getText();
-        List<Book> books = this.bookController.show(title);
+        HashMap<String, String> params = this.buildParams();
+        List<Book> books = this.bookController.index(params);
+
         if (books != null && !books.isEmpty()) {
             return books;
         } else {
             JOptionPane.showMessageDialog(this, "Livro não encontrado.", "Busca", JOptionPane.INFORMATION_MESSAGE);
             return null;
         }
+    }
+
+    private HashMap<String, String> buildParams() {
+        HashMap<String, String> params = new HashMap<>();
+        int authorId = this.getAuthorIdByName(this.fieldAuthor.getText());
+        
+        params.put("title", this.fieldTitle.getText());
+        params.put("authorId", String.valueOf(authorId));
+        params.put("year", String.valueOf(this.fieldPublishedYear.getText()));
+
+        return params;
     }
 
     private void setBooksResult(List<Book> books) {
@@ -324,7 +337,7 @@ public class BooksView extends javax.swing.JFrame {
 
     private void updateBooksList(List<Book> books) {
         if (books != null && !books.isEmpty()) {
-            this.booksList.setListData(books.stream().map(b -> b.getId() + ": " + b.getTitle()).toArray(String[]::new));
+            this.booksList.setListData(books.stream().map(book -> book.getId() + ": " + book.getTitle()).toArray(String[]::new));
         }
     }
 
@@ -352,10 +365,14 @@ public class BooksView extends javax.swing.JFrame {
         return book;
     }
 
+    /* Refactor to dropdown */
     public int getAuthorIdByName(String name) {
-        Author author = this.authorController.show(name).stream().findFirst().orElse(null);
-        if (author != null) {
-            return author.getId();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("name", name);
+
+        List<Author> author = this.authorController.index(params);
+        if (author != null && !author.isEmpty()) {
+            return author.get(0).getId();
         }
         return -1;
     }

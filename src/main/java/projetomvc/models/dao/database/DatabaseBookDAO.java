@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import projetomvc.models.entities.Book;
@@ -82,23 +83,44 @@ public class DatabaseBookDAO extends databaseDAO<Book> {
 	}
 
 	@Override
-	public Book find(String title) throws SQLException {
-		String sql = "SELECT * FROM book WHERE title LIKE ?";
-		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-			stmt.setString(1, "%" + title + "%");
+	public List<Book> find(HashMap<String, String> params) throws SQLException {
+		StringBuilder sql = new StringBuilder("SELECT * FROM book WHERE 1=1");
+
+		for(String key : params.keySet()) {
+			switch (key) {
+				case "title":
+					sql.append(" AND title LIKE ?");
+					break;
+				case "authorId":
+					sql.append(" AND author_id = ?");
+					break;
+				case "publishedYear":
+					sql.append(" AND published_year = ?");
+				default:
+					return null;
+			}
+		}
+
+		try (PreparedStatement stmt = connection.prepareStatement(sql.toString())) {
+			for (int i = 1; i <= params.size(); i++) {
+				stmt.setObject(i, params.values().toArray()[i-1]);
+			}
 			ResultSet rs = stmt.executeQuery();
-			if(rs.next()) {
-				return new Book(
+
+			List<Book> books = new ArrayList<>();
+			while(rs.next()) {
+				books.add(new Book(
 					rs.getInt("id"),
 					rs.getString("title"),
 					rs.getInt("author_id"),
 					rs.getInt("published_year")
-				);
+				));
 			}
+
+			return books;
 		} catch (SQLException e) {
 			throw e;
 		}
-		return null;
 	}
 
 	@Override

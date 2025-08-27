@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import projetomvc.models.entities.Author;
@@ -82,23 +83,42 @@ public class DatabaseAuthorDAO extends databaseDAO<Author>  {
 	}
 
 	@Override
-	public Author find(String name) throws SQLException {
-		String sql = "SELECT * FROM author WHERE name = ? LIMIT 1";
-		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-			stmt.setString(1, name);
+	public List<Author> find(HashMap<String, String> params) throws SQLException {
+		StringBuilder sql = new StringBuilder("SELECT * FROM author WHERE 1=1");
+		for(String key : params.keySet()) {
+			switch (key) {
+				case "name":
+					sql.append(" AND name LIKE ?");
+					break;
+				case "hometown":
+					sql.append(" AND hometown = ?");
+					break;
+				case "birthDate":
+					sql.append(" AND birth_date = ?");
+				default:
+					return null;
+			}
+		}
+		try (PreparedStatement stmt = connection.prepareStatement(sql.toString())) {
+			for (int i = 1; i <= params.size(); i++) {
+				stmt.setObject(i, params.values().toArray()[i-1]);
+			}
 			ResultSet rs = stmt.executeQuery();
-			if(rs.next()) {
-				return new Author(
+
+			List<Author> authors = new ArrayList<>();
+			while(rs.next()) {
+				authors.add(new Author(
 					rs.getInt("id"),
 					rs.getString("name"),
 					rs.getString("hometown"),
 					rs.getInt("birth_date")
-				);
+				));
 			}
+
+			return authors;
 		} catch (SQLException e) {
 			throw e;
 		}
-		return null;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package projetomvc.controllers;
 import projetomvc.models.dao.interfaces.DAO;
 import projetomvc.validators.interfaces.Validator;
 
+import java.util.HashMap;
 import java.util.List;
 
 public abstract class Controller<T> {
@@ -14,9 +15,8 @@ public abstract class Controller<T> {
         this.validator = validator;
     }
 
-    public abstract List<T> index();
+    public abstract List<T> index(HashMap<String, String> params);
     public abstract T show(int id);
-    public abstract T show(String string);
     public abstract T newForm();
     public abstract T edit(int id);
     public abstract boolean create(T entity);

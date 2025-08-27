@@ -1,7 +1,10 @@
 package projetomvc.controllers;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import projetomvc.models.dao.interfaces.DAO;
 import projetomvc.models.entities.Book;
@@ -15,9 +18,18 @@ public class BookController extends Controller<Book> {
     }
 
     @Override
-    public List<Book> index() {
+    public List<Book> index(HashMap<String, String> params) {
         try {
-            return dao.findAll();
+            HashMap<String, String> filteredParams = params.entrySet()
+                .stream()
+                .filter(entry -> !entry.getValue().isEmpty() && !entry.getValue().equals("-1"))
+                .collect(Collectors.toMap(
+                    Map.Entry::getKey,
+                    Map.Entry::getValue,
+                    (e1, e2) -> e1,
+                    HashMap::new
+                ));
+            return !filteredParams.isEmpty() ? dao.find(filteredParams) : dao.findAll();
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             return null;
@@ -28,16 +40,6 @@ public class BookController extends Controller<Book> {
     public Book show(int id) {
         try {
             return dao.find(id);
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            return null;
-        }
-    }
-
-    @Override
-    public Book show(String title) {
-        try {
-            return dao.find(title);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             return null;
