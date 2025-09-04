@@ -4,7 +4,6 @@
  */
 package projetomvc.views;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,9 +30,10 @@ public class BooksView extends javax.swing.JFrame {
      */
     public BooksView(Controller<Author> authorController, Controller<Book> bookController) {
         initComponents();
-        this.textFields = new JTextField[] {this.fieldTitle, this.fieldAuthor, this.fieldPublishedYear};
+        this.textFields = new JTextField[] {this.fieldTitle, this.fieldPublishedYear};
         this.authorController = authorController;
         this.bookController = bookController;
+        this.loadAuthors();
         this.displayBooks(true, true);
     }
 
@@ -57,9 +57,9 @@ public class BooksView extends javax.swing.JFrame {
         labelTitle = new javax.swing.JLabel();
         fieldTitle = new javax.swing.JTextField();
         labelAuthor = new javax.swing.JLabel();
-        fieldAuthor = new javax.swing.JTextField();
         labelPublishedYear = new javax.swing.JLabel();
         fieldPublishedYear = new javax.swing.JTextField();
+        comboBoxAuthors = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         actionResultArea = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -133,14 +133,18 @@ public class BooksView extends javax.swing.JFrame {
         labelAuthor.setForeground(new java.awt.Color(0, 0, 0));
         labelAuthor.setText("Autor:");
 
-        fieldAuthor.setBackground(new java.awt.Color(255, 255, 255));
-        fieldAuthor.setForeground(new java.awt.Color(0, 0, 0));
-
         labelPublishedYear.setForeground(new java.awt.Color(0, 0, 0));
         labelPublishedYear.setText("Ano de publicação:");
 
         fieldPublishedYear.setBackground(new java.awt.Color(255, 255, 255));
         fieldPublishedYear.setForeground(new java.awt.Color(0, 0, 0));
+
+        comboBoxAuthors.setModel(new javax.swing.DefaultComboBoxModel<>());
+        comboBoxAuthors.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxAuthorsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelInputLayout = new javax.swing.GroupLayout(panelInput);
         panelInput.setLayout(panelInputLayout);
@@ -148,20 +152,20 @@ public class BooksView extends javax.swing.JFrame {
             panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelInputLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelInputLayout.createSequentialGroup()
                         .addComponent(labelTitle)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fieldTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
+                        .addComponent(fieldTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelInputLayout.createSequentialGroup()
                         .addComponent(labelAuthor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fieldAuthor)))
+                        .addComponent(comboBoxAuthors, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(labelPublishedYear)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fieldPublishedYear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
         panelInputLayout.setVerticalGroup(
             panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,7 +181,7 @@ public class BooksView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelAuthor)
-                    .addComponent(fieldAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxAuthors, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -206,7 +210,9 @@ public class BooksView extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(labelHeader, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelButtons, javax.swing.GroupLayout.DEFAULT_SIZE, 793, Short.MAX_VALUE)
-                    .addComponent(panelInput, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(panelInput, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -231,10 +237,9 @@ public class BooksView extends javax.swing.JFrame {
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
         if (this.selectedBookId != null) {
             Book book = bookController.show(this.selectedBookId);
-            String authorName = authorController.show(book.getAuthorId()).getName();
 
             this.fieldTitle.setText(book.getTitle());
-            this.fieldAuthor.setText(authorName);
+            this.comboBoxAuthors.setSelectedIndex(0);
             this.fieldPublishedYear.setText(book.getPublishedYear().toString());
         }
         else {
@@ -316,7 +321,7 @@ public class BooksView extends javax.swing.JFrame {
 
     private HashMap<String, String> buildParams() {
         HashMap<String, String> params = new HashMap<>();
-        int authorId = this.getAuthorIdByName(this.fieldAuthor.getText());
+        int authorId = this.getAuthorIdByName(this.comboBoxAuthors.getSelectedItem().toString());
         
         params.put("title", this.fieldTitle.getText());
         params.put("authorId", String.valueOf(authorId));
@@ -356,13 +361,26 @@ public class BooksView extends javax.swing.JFrame {
 
     private Book buildBookFromInputs() {
         Book book = new Book();
-        int authorId = this.getAuthorIdByName(this.fieldAuthor.getText());
+        int authorId = this.getAuthorIdByName(this.comboBoxAuthors.getSelectedItem().toString());
 
         book.setTitle(this.fieldTitle.getText());
         book.setAuthorId(authorId);
         book.setPublishedYear(Integer.parseInt(this.fieldPublishedYear.getText()));
 
         return book;
+    }
+
+    private void loadAuthors() {
+        this.comboBoxAuthors.removeAllItems();
+        this.comboBoxAuthors.addItem("Selecione um autor");
+        List<Author> authors = authorController.index(new HashMap<>());
+
+        for(Author author : authors) {
+            this.comboBoxAuthors.addItem(author.getName());
+        }
+    }
+    private void comboBoxAuthorsActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        
     }
 
     /* Refactor to dropdown */
@@ -441,7 +459,7 @@ public class BooksView extends javax.swing.JFrame {
     private javax.swing.JButton buttonNew;
     private javax.swing.JButton buttonSave;
     private javax.swing.JButton buttonSearch;
-    private javax.swing.JTextField fieldAuthor;
+    private javax.swing.JComboBox<String> comboBoxAuthors;
     private javax.swing.JTextField fieldPublishedYear;
     private javax.swing.JTextField fieldTitle;
     private javax.swing.JScrollPane jScrollPane1;
