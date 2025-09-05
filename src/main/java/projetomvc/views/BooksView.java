@@ -383,7 +383,6 @@ public class BooksView extends javax.swing.JFrame {
         
     }
 
-    /* Refactor to dropdown */
     public int getAuthorIdByName(String name) {
         HashMap<String, String> params = new HashMap<>();
         params.put("name", name);
