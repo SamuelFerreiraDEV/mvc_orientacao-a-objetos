@@ -16,6 +16,7 @@ import projetomvc.validators.AuthorValidator;
 import projetomvc.validators.BookValidator;
 import projetomvc.validators.interfaces.Validator;
 import projetomvc.views.BooksView;
+import projetomvc.views.MainView;
 
 public class Library {
     public static void main(String[] args) {
@@ -30,8 +31,10 @@ public class Library {
             Controller<Author> authorController = new AuthorController(authorDB, authorValidator);
             Controller<Book> bookController = new BookController(bookDB, bookValidator);
     
-            BooksView mainScreen = new BooksView(authorController, bookController);
-            mainScreen.setVisible(true);
+            MainView mainView = new MainView();
+            BooksView booksView = new BooksView(mainView, authorController, bookController);
+            mainView.setBooksView(booksView);
+            mainView.setVisible(true);
 
         } catch (SQLException e) {
             System.out.println("Ainda não tá pronto. Calma lá, Zé Rui...");

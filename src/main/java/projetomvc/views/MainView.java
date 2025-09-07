@@ -4,14 +4,17 @@
  */
 package projetomvc.views;
 
+import projetomvc.views.interfaces.ViewNavigator;
+
 /**
  *
  * @author samuel
  */
-public class MainView extends javax.swing.JFrame {
+public class MainView extends javax.swing.JFrame implements ViewNavigator {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainView.class.getName());
-
+    private BooksView booksView;
+    
     /**
      * Creates new form MainView
      */
@@ -40,6 +43,11 @@ public class MainView extends javax.swing.JFrame {
         manageBooksButton.setText("Gerenciar Livros");
         manageBooksButton.setAlignmentX(0.5F);
         manageBooksButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        manageBooksButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageBooksButtonActionPerformed(evt);
+            }
+        });
 
         manageAuthorsButton.setText("Gerenciar Autores");
         manageAuthorsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -94,9 +102,27 @@ public class MainView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    @Override public void showMainView() {
+        this.setVisible(true);
+    }
+
+    @Override
+    public void showBooksView() {
+        this.setVisible(false);
+        this.booksView.setVisible(true);
+    }
+
+    public void setBooksView(BooksView booksView) {
+        this.booksView = booksView;
+    }
+
     private void manageAuthorsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageAuthorsButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_manageAuthorsButtonActionPerformed
+
+    private void manageBooksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageBooksButtonActionPerformed
+        this.showBooksView();
+    }//GEN-LAST:event_manageBooksButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel labelHeader;

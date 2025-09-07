@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import projetomvc.controllers.Controller;
 import projetomvc.models.entities.Author;
 import projetomvc.models.entities.Book;
+import projetomvc.views.interfaces.ViewNavigator;
 
 /**
  *
@@ -22,17 +23,19 @@ public class BooksView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BooksView.class.getName());
     private JTextField[] textFields;
+    private ViewNavigator navigator;
     private Controller<Author> authorController;
     private Controller<Book> bookController;
     private Integer selectedBookId = null;
     /**
      * Creates new form BooksView
      */
-    public BooksView(Controller<Author> authorController, Controller<Book> bookController) {
+    public BooksView(ViewNavigator navigator, Controller<Author> authorController, Controller<Book> bookController) {
         initComponents();
-        this.textFields = new JTextField[] {this.fieldTitle, this.fieldPublishedYear};
+        this.navigator = navigator;
         this.authorController = authorController;
         this.bookController = bookController;
+        this.textFields = new JTextField[] {this.fieldTitle, this.fieldPublishedYear};
         this.loadAuthors();
         this.displayBooks(true, true);
     }

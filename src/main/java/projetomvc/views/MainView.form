@@ -79,6 +79,9 @@
             <Property name="alignmentX" type="float" value="0.5"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="manageBooksButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="manageAuthorsButton">
           <Properties>
