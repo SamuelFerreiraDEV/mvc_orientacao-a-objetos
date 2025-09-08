@@ -51,6 +51,7 @@ public class BooksView extends javax.swing.JFrame {
 
         labelHeader = new javax.swing.JLabel();
         panelButtons = new javax.swing.JPanel();
+        buttonMainScreen = new javax.swing.JButton();
         buttonNew = new javax.swing.JButton();
         buttonSearch = new javax.swing.JButton();
         buttonEdit = new javax.swing.JButton();
@@ -73,6 +74,18 @@ public class BooksView extends javax.swing.JFrame {
         labelHeader.setFont(new java.awt.Font("Fira Code", 1, 24)); // NOI18N
         labelHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelHeader.setText("Gerenciador de Livros");
+
+        buttonMainScreen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/exit.png"))); // NOI18N
+        buttonMainScreen.setText("Voltar");
+        buttonMainScreen.setMaximumSize(new java.awt.Dimension(103, 42));
+        buttonMainScreen.setMinimumSize(new java.awt.Dimension(103, 42));
+        buttonMainScreen.setPreferredSize(new java.awt.Dimension(103, 42));
+        buttonMainScreen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonMainScreenActionPerformed(evt);
+            }
+        });
+        panelButtons.add(buttonMainScreen);
 
         buttonNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/novo_32x32.png"))); // NOI18N
         buttonNew.setText("Novo");
@@ -236,6 +249,11 @@ public class BooksView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buttonMainScreenActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+        this.setVisible(false);
+        this.navigator.showMainView();
+    }   
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
         if (this.selectedBookId != null) {
@@ -458,6 +476,7 @@ public class BooksView extends javax.swing.JFrame {
     private javax.swing.JList<String> booksList;
     private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonEdit;
+    private javax.swing.JButton buttonMainScreen;   
     private javax.swing.JButton buttonNew;
     private javax.swing.JButton buttonSave;
     private javax.swing.JButton buttonSearch;
