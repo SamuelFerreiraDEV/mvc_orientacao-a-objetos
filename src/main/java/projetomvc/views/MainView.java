@@ -14,6 +14,7 @@ public class MainView extends javax.swing.JFrame implements ViewNavigator {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainView.class.getName());
     private BooksView booksView;
+    private AuthorsView authorsView;
     
     /**
      * Creates new form MainView
@@ -112,12 +113,22 @@ public class MainView extends javax.swing.JFrame implements ViewNavigator {
         this.booksView.setVisible(true);
     }
 
+    @Override
+    public void showAuthorsView() {
+        this.setVisible(false);
+        this.authorsView.setVisible(true);
+    }
+
     public void setBooksView(BooksView booksView) {
         this.booksView = booksView;
     }
 
+    public void setAuthorsView(AuthorsView authorsView) {
+        this.authorsView = authorsView;
+    }
+
     private void manageAuthorsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageAuthorsButtonActionPerformed
-        // TODO add your handling code here:
+        this.showAuthorsView();
     }//GEN-LAST:event_manageAuthorsButtonActionPerformed
 
     private void manageBooksButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageBooksButtonActionPerformed

@@ -15,6 +15,7 @@ import projetomvc.models.entities.Book;
 import projetomvc.validators.AuthorValidator;
 import projetomvc.validators.BookValidator;
 import projetomvc.validators.interfaces.Validator;
+import projetomvc.views.AuthorsView;
 import projetomvc.views.BooksView;
 import projetomvc.views.MainView;
 
@@ -32,7 +33,9 @@ public class Library {
             Controller<Book> bookController = new BookController(bookDB, bookValidator);
     
             MainView mainView = new MainView();
+            AuthorsView authorsView = new AuthorsView(mainView, authorController, bookController);
             BooksView booksView = new BooksView(mainView, authorController, bookController);
+            mainView.setAuthorsView(authorsView);
             mainView.setBooksView(booksView);
             mainView.setVisible(true);
 

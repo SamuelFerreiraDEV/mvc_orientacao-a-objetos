@@ -4,6 +4,11 @@
  */
 package projetomvc.views;
 
+import projetomvc.controllers.Controller;
+import projetomvc.models.entities.Author;
+import projetomvc.models.entities.Book;
+import projetomvc.views.interfaces.ViewNavigator;
+
 /**
  *
  * @author samuel
@@ -11,12 +16,18 @@ package projetomvc.views;
 public class AuthorsView extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AuthorsView.class.getName());
+    private ViewNavigator navigator;
+    private Controller<Author> authorController;
+    private Controller<Book> bookController;
 
     /**
      * Creates new form AuthorsView
      */
-    public AuthorsView() {
+    public AuthorsView(ViewNavigator navigator, Controller<Author> authorController, Controller<Book> bookController) {
         initComponents();
+        this.navigator = navigator;
+        this.authorController = authorController;
+        this.bookController = bookController;
     }
 
     /**
@@ -59,6 +70,11 @@ public class AuthorsView extends javax.swing.JFrame {
         buttonMainScreen.setMaximumSize(new java.awt.Dimension(103, 42));
         buttonMainScreen.setMinimumSize(new java.awt.Dimension(103, 42));
         buttonMainScreen.setPreferredSize(new java.awt.Dimension(103, 42));
+        buttonMainScreen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonMainScreenActionPerformed(evt);
+            }
+        });
         panelButtons.add(buttonMainScreen);
 
         buttonNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/novo_32x32.png"))); // NOI18N
@@ -217,6 +233,11 @@ public class AuthorsView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buttonMainScreenActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+        this.setVisible(false);
+        this.navigator.showMainView();
+    }
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
     }//GEN-LAST:event_buttonNewActionPerformed
