@@ -19,23 +19,16 @@ import projetomvc.views.interfaces.ViewNavigator;
  *
  * @author samuel
  */
-public class BooksView extends javax.swing.JFrame {
-    
+public class BooksView extends BaseView<Book> {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BooksView.class.getName());
-    private JTextField[] textFields;
-    private ViewNavigator navigator;
-    private Controller<Author> authorController;
-    private Controller<Book> bookController;
     private Integer selectedBookId = null;
     /**
      * Creates new form BooksView
      */
     public BooksView(ViewNavigator navigator, Controller<Author> authorController, Controller<Book> bookController) {
+        super(new JTextField[] {}, navigator, authorController, bookController);
         initComponents();
-        this.navigator = navigator;
-        this.authorController = authorController;
-        this.bookController = bookController;
-        this.textFields = new JTextField[] {this.fieldTitle, this.fieldPublishedYear};
+        super.textFields = new JTextField[] { this.fieldTitle, this.fieldPublishedYear };
         this.loadAuthors();
         this.displayBooks(true, true);
     }
@@ -288,7 +281,7 @@ public class BooksView extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
-        this.clearTextFields();
+        super.clearTextFields();
         this.booksList.clearSelection();
         this.selectedBookId = null;
     }//GEN-LAST:event_buttonNewActionPerformed
@@ -309,7 +302,7 @@ public class BooksView extends javax.swing.JFrame {
                 action = "save";
             }
 
-            this.clearTextFields();
+            super.clearTextFields();
             this.displayActionResultText(action, persisted, book);
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
@@ -353,7 +346,7 @@ public class BooksView extends javax.swing.JFrame {
 
     private void setBooksResult(List<Book> books) {
         if (books != null && !books.isEmpty()) {
-            this.clearTextFields();
+            super.clearTextFields();
             this.actionResultArea.setText("Livros encontrados:\n");
             for (Book book : books) {
                 this.actionResultArea.append("Título: " + book.getTitle() + ", Autor: " + authorController.show(book.getAuthorId()).getName() + ", Ano: " + book.getPublishedYear() + "\n");
@@ -415,12 +408,6 @@ public class BooksView extends javax.swing.JFrame {
         return -1;
     }
 
-    private void clearTextFields() {
-        for(JTextField field : textFields) {
-            field.setText("");
-        }
-    }
-
     private void displayActionResultText(String action, boolean success, Book book) {
         String result = "";
         switch (action) {
@@ -438,15 +425,6 @@ public class BooksView extends javax.swing.JFrame {
         
     }
 
-    private boolean anyFieldEmpty() {
-        for(JTextField f : textFields) {
-            if (f == null || f.getText() == null || f.getText().trim().isEmpty()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private boolean isYearValid() {
         String year = this.fieldPublishedYear.getText();
         try {
@@ -457,9 +435,9 @@ public class BooksView extends javax.swing.JFrame {
         }
     }
 
-    private boolean fieldsValid() {
-        if (this.anyFieldEmpty()) {
-            JOptionPane.showMessageDialog(this, "Preencha todos os campos.", "Validação", JOptionPane.WARNING_MESSAGE);
+    @Override
+    protected boolean fieldsValid() {
+        if (!super.fieldsValid()) {
             return false;
         }
         

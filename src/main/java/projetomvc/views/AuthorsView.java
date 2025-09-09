@@ -4,6 +4,8 @@
  */
 package projetomvc.views;
 
+import javax.swing.JTextField;
+
 import projetomvc.controllers.Controller;
 import projetomvc.models.entities.Author;
 import projetomvc.models.entities.Book;
@@ -13,21 +15,16 @@ import projetomvc.views.interfaces.ViewNavigator;
  *
  * @author samuel
  */
-public class AuthorsView extends javax.swing.JFrame {
-    
+public class AuthorsView extends BaseView<Author> {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AuthorsView.class.getName());
-    private ViewNavigator navigator;
-    private Controller<Author> authorController;
-    private Controller<Book> bookController;
 
     /**
      * Creates new form AuthorsView
      */
     public AuthorsView(ViewNavigator navigator, Controller<Author> authorController, Controller<Book> bookController) {
+        super(new JTextField[] {}, navigator, authorController, bookController);
         initComponents();
-        this.navigator = navigator;
-        this.authorController = authorController;
-        this.bookController = bookController;
+        super.textFields = new JTextField[] { this.fieldName, this.fieldBirthDate, this.fieldHometown };
     }
 
     /**
@@ -240,6 +237,7 @@ public class AuthorsView extends javax.swing.JFrame {
     }
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
+        super.clearTextFields();
     }//GEN-LAST:event_buttonNewActionPerformed
 
     private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
