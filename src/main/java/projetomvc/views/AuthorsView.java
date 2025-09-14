@@ -17,6 +17,7 @@ import projetomvc.views.interfaces.ViewNavigator;
  */
 public class AuthorsView extends BaseView<Author> {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AuthorsView.class.getName());
+    private Integer selectedAuthorId = null;
 
     /**
      * Creates new form AuthorsView
@@ -250,7 +251,51 @@ public class AuthorsView extends BaseView<Author> {
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+        if(super.fieldsValid()) {
+            Author author = buildAuthorFromInputs();
+            boolean persisted = false;
+            String action = null;
+
+            if (this.selectedAuthorId != null) {
+                persisted = super.authorController.update(this.selectedAuthorId, author);
+                action = "update";
+                this.selectedAuthorId = null;
+                this.ListAuthors.clearSelection();
+            } else {
+                persisted = super.authorController.create(author);
+                action = "save";
+            }
+
+            super.clearTextFields();
+            this.displayActionResultText(action, persisted, author);
+        }
     }//GEN-LAST:event_buttonSaveActionPerformed
+
+    private Author buildAuthorFromInputs() {
+        Author author = new Author();
+
+        author.setName(this.fieldName.getText());
+        author.setHometown(this.fieldHometown.getText());
+        author.setBirthDate(Integer.parseInt(this.fieldBirthDate.getText()));
+
+        return author;
+    }
+
+    private void displayActionResultText(String action, boolean success, Author author) {
+        String result = "";
+        switch (action) {
+            case "save":
+                result = success ? "Autor salvo: " + author.getName() : "Erro ao salvar autor.";
+                break;
+            case "update":
+                result = success ? "Autor editado: " + author.getName() : "Erro ao editar autor.";
+                break;
+            case "delete":
+                result = success ? "Autor removido: " + author.getName() : "Erro ao remover autor.";
+                break;
+        }
+        this.actionResultArea.setText(result);
+    }
 
     private void ListAuthorsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListAuthorsValueChanged
         // TODO add your handling code here:
