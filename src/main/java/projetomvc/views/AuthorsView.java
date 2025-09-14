@@ -95,7 +95,7 @@ public class AuthorsView extends BaseView<Author> {
         buttonSearch.setMinimumSize(new java.awt.Dimension(108, 42));
         buttonSearch.setPreferredSize(new java.awt.Dimension(108, 42));
         buttonSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {   
                 buttonSearchActionPerformed(evt);
             }
         });
@@ -103,6 +103,7 @@ public class AuthorsView extends BaseView<Author> {
 
         buttonEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edit3_32x32.png"))); // NOI18N
         buttonEdit.setText("Editar");
+        buttonEdit.setEnabled(false);
         buttonEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonEditActionPerformed(evt);
@@ -112,6 +113,7 @@ public class AuthorsView extends BaseView<Author> {
 
         buttonDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/del_32x32.png"))); // NOI18N
         buttonDelete.setText("Excluir");
+        buttonDelete.setEnabled(false);
         buttonDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonDeleteActionPerformed(evt);
@@ -253,6 +255,19 @@ public class AuthorsView extends BaseView<Author> {
     }//GEN-LAST:event_buttonSearchActionPerformed
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
+        if (this.selectedAuthorId != null) {
+            Author author = authorController.show(this.selectedAuthorId);
+
+            this.fieldName.setText(author.getName());
+            this.fieldHometown.setText(author.getHometown());
+            this.fieldBirthDate.setText(author.getBirthDate().toString());
+        }
+        else {
+            JOptionPane.showMessageDialog(this,
+                "Selecione um autor da lista para editar.",
+                "Edição",
+                JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_buttonEditActionPerformed
 
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
@@ -354,7 +369,16 @@ public class AuthorsView extends BaseView<Author> {
     }
 
     private void ListAuthorsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListAuthorsValueChanged
-        // TODO add your handling code here:
+        String value = this.ListAuthors.getSelectedValue();
+        if (value != null && !value.trim().isEmpty()) {
+            this.selectedAuthorId = Integer.parseInt(value.split(":")[0]);
+            this.buttonEdit.setEnabled(true);
+            this.buttonDelete.setEnabled(true);
+        } else {
+            this.buttonEdit.setEnabled(false);
+            this.buttonDelete.setEnabled(false);
+            this.selectedAuthorId = null;
+        }
     }//GEN-LAST:event_ListAuthorsValueChanged
 
     @Override
