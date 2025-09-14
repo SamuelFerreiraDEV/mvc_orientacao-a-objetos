@@ -449,6 +449,16 @@ public class BooksView extends BaseView<Book> {
         return true;
     }
 
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if(visible) {
+            super.clearTextFields();
+            this.loadAuthors();
+            this.displayBooks(true, true);
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> booksList;
