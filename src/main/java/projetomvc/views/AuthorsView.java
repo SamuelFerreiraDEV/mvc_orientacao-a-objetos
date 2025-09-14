@@ -271,6 +271,19 @@ public class AuthorsView extends BaseView<Author> {
     }//GEN-LAST:event_buttonEditActionPerformed
 
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
+        if (this.selectedAuthorId != null) {
+            Author author = authorController.show(this.selectedAuthorId);
+            boolean deleted = this.authorController.delete(this.selectedAuthorId);
+            this.displayActionResultText("delete", deleted, author);
+            this.displayAuthors(false, true);
+            this.selectedAuthorId = null;
+            this.ListAuthors.clearSelection();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                "Selecione um autor da lista para remover.",
+                "Remoção",
+                JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_buttonDeleteActionPerformed
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
