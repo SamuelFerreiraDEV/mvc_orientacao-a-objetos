@@ -304,6 +304,7 @@ public class BooksView extends BaseView<Book> {
 
             super.clearTextFields();
             this.displayActionResultText(action, persisted, book);
+            this.displayBooks(false, true);
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 

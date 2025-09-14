@@ -291,6 +291,7 @@ public class AuthorsView extends BaseView<Author> {
 
             super.clearTextFields();
             this.displayActionResultText(action, persisted, author);
+            this.displayAuthors(false, true);
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
