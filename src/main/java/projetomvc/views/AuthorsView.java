@@ -4,6 +4,10 @@
  */
 package projetomvc.views;
 
+import java.util.HashMap;
+import java.util.List;
+
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import projetomvc.controllers.Controller;
@@ -26,6 +30,7 @@ public class AuthorsView extends BaseView<Author> {
         super(new JTextField[] {}, navigator, authorController, bookController);
         initComponents();
         super.textFields = new JTextField[] { this.fieldName, this.fieldBirthDate, this.fieldHometown };
+        this.displayAuthors(true, true);
     }
 
     /**
@@ -239,9 +244,12 @@ public class AuthorsView extends BaseView<Author> {
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
         super.clearTextFields();
+        this.ListAuthors.clearSelection();
+        this.selectedAuthorId = null;
     }//GEN-LAST:event_buttonNewActionPerformed
 
     private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
+        this.displayAuthors(true, true);
     }//GEN-LAST:event_buttonSearchActionPerformed
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
@@ -297,9 +305,66 @@ public class AuthorsView extends BaseView<Author> {
         this.actionResultArea.setText(result);
     }
 
+    private void displayAuthors(boolean updateActionResultArea, boolean updateBooksList) {
+        List<Author> authors = this.searchAuthors();
+        if (updateActionResultArea) {
+            setAuthorsResult(authors);
+        }
+        if (updateBooksList) {
+            this.updateAuthorsList(authors);
+        }
+    }
+
+    private List<Author> searchAuthors() {
+        HashMap<String, String> params = this.buildParams();
+        List<Author> authors = this.authorController.index(params);
+
+        if (authors != null && !authors.isEmpty()) {
+            return authors;
+        } else {
+            JOptionPane.showMessageDialog(this, "Autor não encontrado.", "Busca", JOptionPane.INFORMATION_MESSAGE);
+            return null;
+        }
+    }
+
+    private HashMap<String, String> buildParams() {
+        HashMap<String, String> params = new HashMap<>();
+        
+        params.put("name", this.fieldName.getText());
+        params.put("hometown", this.fieldHometown.getText());
+        params.put("birthDate", this.fieldBirthDate.getText());
+
+        return params;
+    }
+
+    private void setAuthorsResult(List<Author> authors) {
+        if (authors != null && !authors.isEmpty()) {
+            super.clearTextFields();
+            this.actionResultArea.setText("Autores encontrados:\n");
+            for (Author author : authors) {
+                this.actionResultArea.append("Nome: " + author.getName() + ", Cidade Natal: " + authorController.show(author.getId()).getHometown() + ", Data de nascimento: " + author.getBirthDate() + "\n");
+            }
+        }
+    }
+
+    private void updateAuthorsList(List<Author> authors) {
+        if (authors != null && !authors.isEmpty()) {
+            this.ListAuthors.setListData(authors.stream().map(author -> author.getId() + ": " + author.getName()).toArray(String[]::new));
+        }
+    }
+
     private void ListAuthorsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListAuthorsValueChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_ListAuthorsValueChanged
+
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if(visible) {
+            super.clearTextFields();
+            this.displayAuthors(true, true);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea actionResultArea;
