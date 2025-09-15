@@ -256,7 +256,7 @@ public class AuthorsView extends BaseView<Author> {
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
         if (this.selectedAuthorId != null) {
-            Author author = authorController.show(this.selectedAuthorId);
+            Author author = super.getController(Author.class).show(this.selectedAuthorId);
 
             this.fieldName.setText(author.getName());
             this.fieldHometown.setText(author.getHometown());
@@ -272,8 +272,8 @@ public class AuthorsView extends BaseView<Author> {
 
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
         if (this.selectedAuthorId != null) {
-            Author author = authorController.show(this.selectedAuthorId);
-            boolean deleted = this.authorController.delete(this.selectedAuthorId);
+            Author author = super.getController(Author.class).show(this.selectedAuthorId);
+            boolean deleted = super.getController(Author.class).delete(this.selectedAuthorId);
             this.displayActionResultText("delete", deleted, author);
             this.displayAuthors(false, true);
             this.selectedAuthorId = null;
@@ -293,12 +293,12 @@ public class AuthorsView extends BaseView<Author> {
             String action = null;
 
             if (this.selectedAuthorId != null) {
-                persisted = super.authorController.update(this.selectedAuthorId, author);
+                persisted = super.getController(Author.class).update(this.selectedAuthorId, author);
                 action = "update";
                 this.selectedAuthorId = null;
                 this.entitiesList.clearSelection();
             } else {
-                persisted = super.authorController.create(author);
+                persisted = super.getController(Author.class).create(author);
                 action = "save";
             }
 
@@ -346,7 +346,7 @@ public class AuthorsView extends BaseView<Author> {
 
     private List<Author> searchAuthors() {
         HashMap<String, String> params = this.buildParams();
-        List<Author> authors = this.authorController.index(params);
+        List<Author> authors = super.getController(Author.class).index(params);
 
         if (authors != null && !authors.isEmpty()) {
             return authors;
@@ -373,7 +373,7 @@ public class AuthorsView extends BaseView<Author> {
             super.clearTextFields();
             this.actionResultArea.setText("Autores encontrados:\n");
             for (Author entity : entities) {
-                this.actionResultArea.append("Nome: " + entity.getName() + ", Cidade Natal: " + authorController.show(entity.getId()).getHometown() + ", Data de nascimento: " + entity.getBirthDate() + "\n");
+                this.actionResultArea.append("Nome: " + entity.getName() + ", Cidade Natal: " + entity.getHometown() + ", Data de nascimento: " + entity.getBirthDate() + "\n");
             }
         }
     }
@@ -404,6 +404,11 @@ public class AuthorsView extends BaseView<Author> {
             super.clearTextFields();
             this.displayAuthors(true, true);
         }
+    }
+
+    @Override
+    protected Class<Author> getEntityClass() {
+        return Author.class;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

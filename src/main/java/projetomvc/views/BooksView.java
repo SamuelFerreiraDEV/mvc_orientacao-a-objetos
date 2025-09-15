@@ -245,7 +245,7 @@ public class BooksView extends BaseView<Book> {
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
         if (this.selectedBookId != null) {
-            Book book = bookController.show(this.selectedBookId);
+            Book book = super.getController(Book.class).show(this.selectedBookId);
 
             this.fieldTitle.setText(book.getTitle());
             this.comboBoxAuthors.setSelectedIndex(0);
@@ -261,8 +261,8 @@ public class BooksView extends BaseView<Book> {
 
     private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
         if (this.selectedBookId != null) {
-            Book book = bookController.show(this.selectedBookId);
-            boolean deleted = this.bookController.delete(this.selectedBookId);
+            Book book = super.getController(Book.class).show(this.selectedBookId);
+            boolean deleted = super.getController(Book.class).delete(this.selectedBookId);
             this.displayActionResultText("delete", deleted, book);
             this.displayBooks(false, true);
             this.selectedBookId = null;
@@ -288,12 +288,12 @@ public class BooksView extends BaseView<Book> {
             String action = null;
 
             if (this.selectedBookId != null) {
-                persisted = this.bookController.update(this.selectedBookId, book);
+                persisted = super.getController(Book.class).update(this.selectedBookId, book);
                 action = "update";
                 this.selectedBookId = null;
                 this.entitiesList.clearSelection();
             } else {
-                persisted = this.bookController.create(book);
+                persisted = super.getController(Book.class).create(book);
                 action = "save";
             }
 
@@ -319,7 +319,7 @@ public class BooksView extends BaseView<Book> {
 
     private List<Book> searchBooks() {
         HashMap<String, String> params = this.buildParams();
-        List<Book> books = this.bookController.index(params);
+        List<Book> books = super.getController(Book.class).index(params);
 
         if (books != null && !books.isEmpty()) {
             return books;
@@ -347,7 +347,7 @@ public class BooksView extends BaseView<Book> {
             super.clearTextFields();
             this.actionResultArea.setText("Livros encontrados:\n");
             for (Book entity : entities) {
-                this.actionResultArea.append("Título: " + entity.getTitle() + ", Autor: " + authorController.show(entity.getAuthorId()).getName() + ", Ano: " + entity.getPublishedYear() + "\n");
+                this.actionResultArea.append("Título: " + entity.getTitle() + ", Autor: " + super.getController(Author.class).show(entity.getAuthorId()).getName() + ", Ano: " + entity.getPublishedYear() + "\n");
             }
         }
     }
@@ -387,7 +387,7 @@ public class BooksView extends BaseView<Book> {
     private void loadAuthors() {
         this.comboBoxAuthors.removeAllItems();
         this.comboBoxAuthors.addItem("Selecione um autor");
-        List<Author> authors = authorController.index(new HashMap<>());
+        List<Author> authors = super.getController(Author.class).index(new HashMap<>());
 
         for(Author author : authors) {
             this.comboBoxAuthors.addItem(author.getName());
@@ -398,7 +398,7 @@ public class BooksView extends BaseView<Book> {
         HashMap<String, String> params = new HashMap<>();
         params.put("name", name);
 
-        List<Author> author = this.authorController.index(params);
+        List<Author> author = super.getController(Author.class).index(params);
         if (author != null && !author.isEmpty()) {
             return author.get(0).getId();
         }
@@ -456,6 +456,10 @@ public class BooksView extends BaseView<Book> {
         }
     }
 
+    @Override
+    protected Class<Book> getEntityClass() {
+        return Book.class;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> entitiesList;
