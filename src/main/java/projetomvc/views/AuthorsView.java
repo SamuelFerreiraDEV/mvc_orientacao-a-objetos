@@ -337,7 +337,7 @@ public class AuthorsView extends BaseView<Author> {
     private void displayAuthors(boolean updateActionResultArea, boolean updateBooksList) {
         List<Author> authors = this.searchAuthors();
         if (updateActionResultArea) {
-            setAuthorsResult(authors);
+            setEntitiesResult(authors);
         }
         if (updateBooksList) {
             this.updateAuthorsList(authors);
@@ -367,12 +367,13 @@ public class AuthorsView extends BaseView<Author> {
         return params;
     }
 
-    private void setAuthorsResult(List<Author> authors) {
-        if (authors != null && !authors.isEmpty()) {
+    @Override
+    protected void setEntitiesResult(List<Author> entities) {
+        if (entities != null && !entities.isEmpty()) {
             super.clearTextFields();
             this.actionResultArea.setText("Autores encontrados:\n");
-            for (Author author : authors) {
-                this.actionResultArea.append("Nome: " + author.getName() + ", Cidade Natal: " + authorController.show(author.getId()).getHometown() + ", Data de nascimento: " + author.getBirthDate() + "\n");
+            for (Author entity : entities) {
+                this.actionResultArea.append("Nome: " + entity.getName() + ", Cidade Natal: " + authorController.show(entity.getId()).getHometown() + ", Data de nascimento: " + entity.getBirthDate() + "\n");
             }
         }
     }

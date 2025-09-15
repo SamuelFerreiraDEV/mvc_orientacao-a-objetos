@@ -315,7 +315,7 @@ public class BooksView extends BaseView<Book> {
     private void displayBooks(boolean updateActionResultArea, boolean updateBooksList) {
         List<Book> books = this.searchBooks();
         if (updateActionResultArea) {
-            setBooksResult(books);
+            setEntitiesResult(entities);
         }
         if (updateBooksList) {
             this.updateBooksList(books);
@@ -333,6 +333,7 @@ public class BooksView extends BaseView<Book> {
             return null;
         }
     }
+
     @Override
     protected HashMap<String, String> buildParams() {
         HashMap<String, String> params = new HashMap<>();
@@ -345,12 +346,13 @@ public class BooksView extends BaseView<Book> {
         return params;
     }
 
-    private void setBooksResult(List<Book> books) {
-        if (books != null && !books.isEmpty()) {
+    @Override
+    protected void setEntitiesResult(List<Book> entities) {
+        if (entities != null && !entities.isEmpty()) {
             super.clearTextFields();
             this.actionResultArea.setText("Livros encontrados:\n");
-            for (Book book : books) {
-                this.actionResultArea.append("Título: " + book.getTitle() + ", Autor: " + authorController.show(book.getAuthorId()).getName() + ", Ano: " + book.getPublishedYear() + "\n");
+            for (Book entity : entities) {
+                this.actionResultArea.append("Título: " + entity.getTitle() + ", Autor: " + authorController.show(entity.getAuthorId()).getName() + ", Ano: " + entity.getPublishedYear() + "\n");
             }
         }
     }

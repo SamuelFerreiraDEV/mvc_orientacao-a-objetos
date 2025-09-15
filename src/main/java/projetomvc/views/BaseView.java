@@ -1,6 +1,7 @@
 package projetomvc.views;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -24,6 +25,8 @@ public abstract class BaseView<T> extends javax.swing.JFrame {
 	}
 
     protected abstract HashMap<String, String> buildParams();
+    protected abstract void setEntitiesResult(List<T> entities);
+
 
 	protected void clearTextFields() {
         for(JTextField field : textFields) {
