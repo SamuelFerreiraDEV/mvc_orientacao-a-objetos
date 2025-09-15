@@ -333,8 +333,8 @@ public class BooksView extends BaseView<Book> {
             return null;
         }
     }
-
-    private HashMap<String, String> buildParams() {
+    @Override
+    protected HashMap<String, String> buildParams() {
         HashMap<String, String> params = new HashMap<>();
         int authorId = this.getAuthorIdByName(this.comboBoxAuthors.getSelectedItem().toString());
         

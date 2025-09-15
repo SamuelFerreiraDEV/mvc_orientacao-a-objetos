@@ -356,7 +356,8 @@ public class AuthorsView extends BaseView<Author> {
         }
     }
 
-    private HashMap<String, String> buildParams() {
+    @Override
+    protected HashMap<String, String> buildParams() {
         HashMap<String, String> params = new HashMap<>();
         
         params.put("name", this.fieldName.getText());

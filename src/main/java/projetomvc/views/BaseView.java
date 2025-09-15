@@ -1,5 +1,7 @@
 package projetomvc.views;
 
+import java.util.HashMap;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -20,6 +22,8 @@ public abstract class BaseView<T> extends javax.swing.JFrame {
 		this.authorController = authorController;
 		this.bookController = bookController;
 	}
+
+    protected abstract HashMap<String, String> buildParams();
 
 	protected void clearTextFields() {
         for(JTextField field : textFields) {
