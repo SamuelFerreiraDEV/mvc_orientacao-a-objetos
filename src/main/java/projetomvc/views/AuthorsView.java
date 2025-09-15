@@ -60,7 +60,7 @@ public class AuthorsView extends BaseView<Author> {
         jScrollPane1 = new javax.swing.JScrollPane();
         actionResultArea = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        ListAuthors = new javax.swing.JList<>();
+        entitiesList = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -195,12 +195,12 @@ public class AuthorsView extends BaseView<Author> {
         actionResultArea.setRows(5);
         jScrollPane1.setViewportView(actionResultArea);
 
-        ListAuthors.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        entitiesList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                ListAuthorsValueChanged(evt);
+                EntitiesListValueChanged(evt);
             }
         });
-        jScrollPane2.setViewportView(ListAuthors);
+        jScrollPane2.setViewportView(entitiesList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -246,7 +246,7 @@ public class AuthorsView extends BaseView<Author> {
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
         super.clearTextFields();
-        this.ListAuthors.clearSelection();
+        this.entitiesList.clearSelection();
         this.selectedAuthorId = null;
     }//GEN-LAST:event_buttonNewActionPerformed
 
@@ -277,7 +277,7 @@ public class AuthorsView extends BaseView<Author> {
             this.displayActionResultText("delete", deleted, author);
             this.displayAuthors(false, true);
             this.selectedAuthorId = null;
-            this.ListAuthors.clearSelection();
+            this.entitiesList.clearSelection();
         } else {
             JOptionPane.showMessageDialog(this,
                 "Selecione um autor da lista para remover.",
@@ -296,7 +296,7 @@ public class AuthorsView extends BaseView<Author> {
                 persisted = super.authorController.update(this.selectedAuthorId, author);
                 action = "update";
                 this.selectedAuthorId = null;
-                this.ListAuthors.clearSelection();
+                this.entitiesList.clearSelection();
             } else {
                 persisted = super.authorController.create(author);
                 action = "save";
@@ -340,7 +340,7 @@ public class AuthorsView extends BaseView<Author> {
             setEntitiesResult(authors);
         }
         if (updateBooksList) {
-            this.updateAuthorsList(authors);
+            this.updateEntitiesList(authors);
         }
     }
 
@@ -378,14 +378,14 @@ public class AuthorsView extends BaseView<Author> {
         }
     }
 
-    private void updateAuthorsList(List<Author> authors) {
-        if (authors != null && !authors.isEmpty()) {
-            this.ListAuthors.setListData(authors.stream().map(author -> author.getId() + ": " + author.getName()).toArray(String[]::new));
+    protected void updateEntitiesList(List<Author> entities) {
+        if (entities != null && !entities.isEmpty()) {
+            this.entitiesList.setListData(entities.stream().map(entity -> entity.getId() + ": " + entity.getName()).toArray(String[]::new));
         }
     }
 
-    private void ListAuthorsValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListAuthorsValueChanged
-        String value = this.ListAuthors.getSelectedValue();
+    private void EntitiesListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_EntitiesListValueChanged
+        String value = this.entitiesList.getSelectedValue();
         if (value != null && !value.trim().isEmpty()) {
             this.selectedAuthorId = Integer.parseInt(value.split(":")[0]);
             this.buttonEdit.setEnabled(true);
@@ -395,7 +395,7 @@ public class AuthorsView extends BaseView<Author> {
             this.buttonDelete.setEnabled(false);
             this.selectedAuthorId = null;
         }
-    }//GEN-LAST:event_ListAuthorsValueChanged
+    }//GEN-LAST:event_EntitiesListValueChanged
 
     @Override
     public void setVisible(boolean visible) {
@@ -423,7 +423,7 @@ public class AuthorsView extends BaseView<Author> {
     private javax.swing.JLabel labelHeader;
     private javax.swing.JLabel labelHometown;
     private javax.swing.JLabel labelName;
-    private javax.swing.JList<String> ListAuthors;
+    private javax.swing.JList<String> entitiesList;
     private javax.swing.JPanel panelButtons;
     private javax.swing.JPanel panelInput;
     // End of variables declaration//GEN-END:variables

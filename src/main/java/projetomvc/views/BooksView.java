@@ -60,7 +60,7 @@ public class BooksView extends BaseView<Book> {
         jScrollPane1 = new javax.swing.JScrollPane();
         actionResultArea = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        booksList = new javax.swing.JList<>();
+        entitiesList = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -149,11 +149,6 @@ public class BooksView extends BaseView<Book> {
         fieldPublishedYear.setForeground(new java.awt.Color(0, 0, 0));
 
         comboBoxAuthors.setModel(new javax.swing.DefaultComboBoxModel<>());
-        comboBoxAuthors.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboBoxAuthorsActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout panelInputLayout = new javax.swing.GroupLayout(panelInput);
         panelInput.setLayout(panelInputLayout);
@@ -199,12 +194,12 @@ public class BooksView extends BaseView<Book> {
         actionResultArea.setRows(5);
         jScrollPane1.setViewportView(actionResultArea);
 
-        booksList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        entitiesList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                booksListValueChanged(evt);
+                entitiesListValueChanged(evt);
             }
         });
-        jScrollPane2.setViewportView(booksList);
+        jScrollPane2.setViewportView(entitiesList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -271,7 +266,7 @@ public class BooksView extends BaseView<Book> {
             this.displayActionResultText("delete", deleted, book);
             this.displayBooks(false, true);
             this.selectedBookId = null;
-            this.booksList.clearSelection();
+            this.entitiesList.clearSelection();
         } else {
             JOptionPane.showMessageDialog(this, 
                 "Selecione um livro da lista para remover.", 
@@ -282,7 +277,7 @@ public class BooksView extends BaseView<Book> {
 
     private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNewActionPerformed
         super.clearTextFields();
-        this.booksList.clearSelection();
+        this.entitiesList.clearSelection();
         this.selectedBookId = null;
     }//GEN-LAST:event_buttonNewActionPerformed
 
@@ -296,7 +291,7 @@ public class BooksView extends BaseView<Book> {
                 persisted = this.bookController.update(this.selectedBookId, book);
                 action = "update";
                 this.selectedBookId = null;
-                this.booksList.clearSelection();
+                this.entitiesList.clearSelection();
             } else {
                 persisted = this.bookController.create(book);
                 action = "save";
@@ -317,8 +312,8 @@ public class BooksView extends BaseView<Book> {
         if (updateActionResultArea) {
             setEntitiesResult(entities);
         }
-        if (updateBooksList) {
-            this.updateBooksList(books);
+        if (updateEntitiesList) {
+            this.updateEntitiesList(entities);
         }
     }
 
@@ -357,14 +352,16 @@ public class BooksView extends BaseView<Book> {
         }
     }
 
-    private void updateBooksList(List<Book> books) {
-        if (books != null && !books.isEmpty()) {
-            this.booksList.setListData(books.stream().map(book -> book.getId() + ": " + book.getTitle()).toArray(String[]::new));
+    @Override
+    protected void updateEntitiesList(List<Book> entities) {
+        if (entities != null && !entities.isEmpty()) {
+            this.entitiesList.setListData(entities.stream().map(entity -> entity.getId() + ": " + entity.getTitle()).toArray(String[]::new));
         }
     }
 
-    private void booksListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_booksListValueChanged
-        String value = this.booksList.getSelectedValue();
+    // ver depois se override ou não
+    private void entitiesListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_entitiesListValueChanged
+        String value = this.entitiesList.getSelectedValue();
         if (value != null && !value.trim().isEmpty()) {
             this.selectedBookId = Integer.parseInt(value.split(":")[0]);
             this.buttonEdit.setEnabled(true);
@@ -374,7 +371,7 @@ public class BooksView extends BaseView<Book> {
             this.buttonDelete.setEnabled(false);
             this.selectedBookId = null;
         }
-    }//GEN-LAST:event_booksListValueChanged
+    }//GEN-LAST:event_entitiesListValueChanged
 
     private Book buildBookFromInputs() {
         Book book = new Book();
@@ -395,9 +392,6 @@ public class BooksView extends BaseView<Book> {
         for(Author author : authors) {
             this.comboBoxAuthors.addItem(author.getName());
         }
-    }
-    private void comboBoxAuthorsActionPerformed(java.awt.event.ActionEvent evt) {                                               
-        
     }
 
     public int getAuthorIdByName(String name) {
@@ -464,7 +458,7 @@ public class BooksView extends BaseView<Book> {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> booksList;
+    private javax.swing.JList<String> entitiesList;
     private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonEdit;
     private javax.swing.JButton buttonMainScreen;   
