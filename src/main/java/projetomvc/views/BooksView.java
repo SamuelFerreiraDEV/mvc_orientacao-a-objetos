@@ -30,7 +30,7 @@ public class BooksView extends BaseView<Book> {
         initComponents();
         super.textFields = new JTextField[] { this.fieldTitle, this.fieldPublishedYear };
         this.loadAuthors();
-        this.displayBooks(true, true);
+        super.displayEntities(true, true);
     }
 
     /**
@@ -264,7 +264,7 @@ public class BooksView extends BaseView<Book> {
             Book book = super.getController(Book.class).show(this.selectedBookId);
             boolean deleted = super.getController(Book.class).delete(this.selectedBookId);
             this.displayActionResultText("delete", deleted, book);
-            this.displayBooks(false, true);
+            super.displayEntities(false, true);
             this.selectedBookId = null;
             this.entitiesList.clearSelection();
         } else {
@@ -299,35 +299,13 @@ public class BooksView extends BaseView<Book> {
 
             super.clearTextFields();
             this.displayActionResultText(action, persisted, book);
-            this.displayBooks(false, true);
+            super.displayEntities(false, true);
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
     private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
-        this.displayBooks(true, true);
+        super.displayEntities(true, true);
     }//GEN-LAST:event_buttonSearchActionPerformed
-
-    private void displayBooks(boolean updateActionResultArea, boolean updateEntitiesList) {
-        List<Book> entities = this.searchBooks();
-        if (updateActionResultArea) {
-            setEntitiesResult(entities);
-        }
-        if (updateEntitiesList) {
-            this.updateEntitiesList(entities);
-        }
-    }
-
-    private List<Book> searchBooks() {
-        HashMap<String, String> params = this.buildParams();
-        List<Book> books = super.getController(Book.class).index(params);
-
-        if (books != null && !books.isEmpty()) {
-            return books;
-        } else {
-            JOptionPane.showMessageDialog(this, "Livro não encontrado.", "Busca", JOptionPane.INFORMATION_MESSAGE);
-            return null;
-        }
-    }
 
     @Override
     protected HashMap<String, String> buildParams() {
@@ -452,7 +430,7 @@ public class BooksView extends BaseView<Book> {
         if(visible) {
             super.clearTextFields();
             this.loadAuthors();
-            this.displayBooks(true, true);
+            super.displayEntities(true, true);
         }
     }
 

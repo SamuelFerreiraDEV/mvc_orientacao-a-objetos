@@ -30,7 +30,7 @@ public class AuthorsView extends BaseView<Author> {
         super(new JTextField[] {}, navigator, authorController, bookController);
         initComponents();
         super.textFields = new JTextField[] { this.fieldName, this.fieldBirthDate, this.fieldHometown };
-        this.displayAuthors(true, true);
+        super.displayEntities(true, true);
     }
 
     /**
@@ -251,7 +251,7 @@ public class AuthorsView extends BaseView<Author> {
     }//GEN-LAST:event_buttonNewActionPerformed
 
     private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
-        this.displayAuthors(true, true);
+        super.displayEntities(true, true);
     }//GEN-LAST:event_buttonSearchActionPerformed
 
     private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
@@ -275,7 +275,7 @@ public class AuthorsView extends BaseView<Author> {
             Author author = super.getController(Author.class).show(this.selectedAuthorId);
             boolean deleted = super.getController(Author.class).delete(this.selectedAuthorId);
             this.displayActionResultText("delete", deleted, author);
-            this.displayAuthors(false, true);
+            super.displayEntities(false, true);
             this.selectedAuthorId = null;
             this.entitiesList.clearSelection();
         } else {
@@ -304,7 +304,7 @@ public class AuthorsView extends BaseView<Author> {
 
             super.clearTextFields();
             this.displayActionResultText(action, persisted, author);
-            this.displayAuthors(false, true);
+            super.displayEntities(false, true);
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
@@ -332,28 +332,6 @@ public class AuthorsView extends BaseView<Author> {
                 break;
         }
         this.actionResultArea.setText(result);
-    }
-
-    private void displayAuthors(boolean updateActionResultArea, boolean updateBooksList) {
-        List<Author> authors = this.searchAuthors();
-        if (updateActionResultArea) {
-            setEntitiesResult(authors);
-        }
-        if (updateBooksList) {
-            this.updateEntitiesList(authors);
-        }
-    }
-
-    private List<Author> searchAuthors() {
-        HashMap<String, String> params = this.buildParams();
-        List<Author> authors = super.getController(Author.class).index(params);
-
-        if (authors != null && !authors.isEmpty()) {
-            return authors;
-        } else {
-            JOptionPane.showMessageDialog(this, "Autor não encontrado.", "Busca", JOptionPane.INFORMATION_MESSAGE);
-            return null;
-        }
     }
 
     @Override
@@ -402,7 +380,7 @@ public class AuthorsView extends BaseView<Author> {
         super.setVisible(visible);
         if(visible) {
             super.clearTextFields();
-            this.displayAuthors(true, true);
+            super.displayEntities(true, true);
         }
     }
 

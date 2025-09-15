@@ -29,6 +29,28 @@ public abstract class BaseView<T> extends javax.swing.JFrame {
     protected abstract void updateEntitiesList(List<T> entities);
     protected abstract Class<T> getEntityClass();
 
+    protected void displayEntities(boolean updateActionResultArea, boolean updateEntitiesList) {
+        List<T> entities = this.searchEntities();
+        if (updateActionResultArea) {
+            this.setEntitiesResult(entities);
+        }
+        if (updateEntitiesList) {
+            this.updateEntitiesList(entities);
+        }
+    }
+
+    protected List<T> searchEntities() {
+        HashMap<String, String> params = this.buildParams();
+        List<T> entities = this.getController(this.getEntityClass()).index(params);
+
+        if (entities != null && !entities.isEmpty()) {
+            return entities;
+        } else {
+            JOptionPane.showMessageDialog(this, "Não encontrado.", "Busca", JOptionPane.INFORMATION_MESSAGE);
+            return null;
+        }
+    }
+
     @SuppressWarnings("unchecked")
     protected <E> Controller<E> getController(Class<E> clazz) {
         Controller<E> controller = (Controller<E>) controllers.get(clazz);
