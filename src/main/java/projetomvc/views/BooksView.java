@@ -307,8 +307,8 @@ public class BooksView extends BaseView<Book> {
         this.displayBooks(true, true);
     }//GEN-LAST:event_buttonSearchActionPerformed
 
-    private void displayBooks(boolean updateActionResultArea, boolean updateBooksList) {
-        List<Book> books = this.searchBooks();
+    private void displayBooks(boolean updateActionResultArea, boolean updateEntitiesList) {
+        List<Book> entities = this.searchBooks();
         if (updateActionResultArea) {
             setEntitiesResult(entities);
         }
