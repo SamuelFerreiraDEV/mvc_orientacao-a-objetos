@@ -288,7 +288,7 @@ public class AuthorsView extends BaseView<Author> {
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         if(super.fieldsValid()) {
-            Author author = buildAuthorFromInputs();
+            Author author = buildEntityFromInputs();
             boolean persisted = false;
             String action = null;
 
@@ -308,7 +308,8 @@ public class AuthorsView extends BaseView<Author> {
         }
     }//GEN-LAST:event_buttonSaveActionPerformed
 
-    private Author buildAuthorFromInputs() {
+    @Override
+    protected Author buildEntityFromInputs() {
         Author author = new Author();
 
         author.setName(this.fieldName.getText());

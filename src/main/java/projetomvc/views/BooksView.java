@@ -283,7 +283,7 @@ public class BooksView extends BaseView<Book> {
 
     private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
         if(this.fieldsValid()) {
-            Book book = buildBookFromInputs();
+            Book book = buildEntityFromInputs();
             boolean persisted = false;
             String action = null;
 
@@ -351,7 +351,8 @@ public class BooksView extends BaseView<Book> {
         }
     }//GEN-LAST:event_entitiesListValueChanged
 
-    private Book buildBookFromInputs() {
+    @Override
+    protected Book buildEntityFromInputs() {
         Book book = new Book();
         int authorId = this.getAuthorIdByName(this.comboBoxAuthors.getSelectedItem().toString());
 

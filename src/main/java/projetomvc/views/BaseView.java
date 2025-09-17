@@ -28,6 +28,7 @@ public abstract class BaseView<T> extends javax.swing.JFrame {
     protected abstract void setEntitiesResult(List<T> entities);
     protected abstract void updateEntitiesList(List<T> entities);
     protected abstract Class<T> getEntityClass();
+    protected abstract T buildEntityFromInputs();
 
     protected void displayEntities(boolean updateActionResultArea, boolean updateEntitiesList) {
         List<T> entities = this.searchEntities();
