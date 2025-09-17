@@ -373,7 +373,7 @@ public class BooksView extends BaseView<Book> {
         }
     }
 
-    public int getAuthorIdByName(String name) {
+    private int getAuthorIdByName(String name) {
         HashMap<String, String> params = new HashMap<>();
         params.put("name", name);
 
@@ -384,7 +384,8 @@ public class BooksView extends BaseView<Book> {
         return -1;
     }
 
-    private void displayActionResultText(String action, boolean success, Book book) {
+    @Override
+    protected void displayActionResultText(String action, boolean success, Book book) {
         String result = "";
         switch (action) {
             case "save":

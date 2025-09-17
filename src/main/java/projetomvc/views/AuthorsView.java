@@ -319,7 +319,8 @@ public class AuthorsView extends BaseView<Author> {
         return author;
     }
 
-    private void displayActionResultText(String action, boolean success, Author author) {
+    @Override
+    protected void displayActionResultText(String action, boolean success, Author author) {
         String result = "";
         switch (action) {
             case "save":
