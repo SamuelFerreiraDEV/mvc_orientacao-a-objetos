@@ -17,6 +17,20 @@ public abstract class BaseView<T> extends javax.swing.JFrame {
 	protected final ViewNavigator navigator;
     private final Map<Class<?>, Controller<?>> controllers = new HashMap<>();
 
+    protected javax.swing.JList<String> entitiesList;
+    protected javax.swing.JButton buttonDelete;
+    protected javax.swing.JButton buttonEdit;
+    protected javax.swing.JButton buttonMainScreen;
+    protected javax.swing.JButton buttonNew;
+    protected javax.swing.JButton buttonSave;
+    protected javax.swing.JButton buttonSearch;
+    protected javax.swing.JScrollPane jScrollPane1;
+    protected javax.swing.JScrollPane jScrollPane2;
+    protected javax.swing.JLabel labelHeader;
+    protected javax.swing.JPanel panelButtons;
+    protected javax.swing.JPanel panelInput;
+    protected javax.swing.JTextArea actionResultArea;
+
 	public BaseView(JTextField[] textFields, ViewNavigator navigator, Controller<Author> authorController, Controller<Book> bookController) {
 		this.textFields = textFields;
 		this.navigator = navigator;

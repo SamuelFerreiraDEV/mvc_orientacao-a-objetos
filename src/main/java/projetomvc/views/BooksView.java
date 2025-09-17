@@ -22,6 +22,14 @@ import projetomvc.views.interfaces.ViewNavigator;
 public class BooksView extends BaseView<Book> {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BooksView.class.getName());
     private Integer selectedBookId = null;
+
+    private javax.swing.JLabel labelTitle;
+    private javax.swing.JLabel labelAuthor;
+    private javax.swing.JLabel labelPublishedYear;
+    private javax.swing.JTextField fieldTitle;
+    private javax.swing.JTextField fieldPublishedYear;
+    private javax.swing.JComboBox<String> comboBoxAuthors;
+
     /**
      * Creates new form BooksView
      */
@@ -440,26 +448,4 @@ public class BooksView extends BaseView<Book> {
     protected Class<Book> getEntityClass() {
         return Book.class;
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> entitiesList;
-    private javax.swing.JButton buttonDelete;
-    private javax.swing.JButton buttonEdit;
-    private javax.swing.JButton buttonMainScreen;   
-    private javax.swing.JButton buttonNew;
-    private javax.swing.JButton buttonSave;
-    private javax.swing.JButton buttonSearch;
-    private javax.swing.JComboBox<String> comboBoxAuthors;
-    private javax.swing.JTextField fieldPublishedYear;
-    private javax.swing.JTextField fieldTitle;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel labelAuthor;
-    private javax.swing.JLabel labelHeader;
-    private javax.swing.JLabel labelPublishedYear;
-    private javax.swing.JLabel labelTitle;
-    private javax.swing.JPanel panelButtons;
-    private javax.swing.JPanel panelInput;
-    private javax.swing.JTextArea actionResultArea;
-    // End of variables declaration//GEN-END:variables
 }

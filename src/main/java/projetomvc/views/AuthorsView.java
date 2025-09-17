@@ -23,6 +23,13 @@ public class AuthorsView extends BaseView<Author> {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AuthorsView.class.getName());
     private Integer selectedAuthorId = null;
 
+    private javax.swing.JLabel labelName;
+    private javax.swing.JLabel labelHometown;
+    private javax.swing.JLabel labelBirthDate;
+    private javax.swing.JTextField fieldName;
+    private javax.swing.JTextField fieldHometown;
+    private javax.swing.JTextField fieldBirthDate;
+
     /**
      * Creates new form AuthorsView
      */
@@ -53,7 +60,7 @@ public class AuthorsView extends BaseView<Author> {
         panelInput = new javax.swing.JPanel();
         labelName = new javax.swing.JLabel();
         fieldName = new javax.swing.JTextField();
-        labelAuthor = new javax.swing.JLabel();
+        labelBirthDate = new javax.swing.JLabel();
         labelHometown = new javax.swing.JLabel();
         fieldHometown = new javax.swing.JTextField();
         fieldBirthDate = new javax.swing.JTextField();
@@ -139,8 +146,8 @@ public class AuthorsView extends BaseView<Author> {
         fieldName.setBackground(new java.awt.Color(255, 255, 255));
         fieldName.setForeground(new java.awt.Color(0, 0, 0));
 
-        labelAuthor.setForeground(new java.awt.Color(0, 0, 0));
-        labelAuthor.setText("Data de nascimento:");
+        labelBirthDate.setForeground(new java.awt.Color(0, 0, 0));
+        labelBirthDate.setText("Data de nascimento:");
 
         labelHometown.setForeground(new java.awt.Color(0, 0, 0));
         labelHometown.setText("Cidade natal:");
@@ -163,7 +170,7 @@ public class AuthorsView extends BaseView<Author> {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelInputLayout.createSequentialGroup()
-                        .addComponent(labelAuthor)
+                        .addComponent(labelBirthDate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fieldBirthDate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -185,7 +192,7 @@ public class AuthorsView extends BaseView<Author> {
                         .addComponent(fieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelInputLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelAuthor)
+                    .addComponent(labelBirthDate)
                     .addComponent(fieldBirthDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -390,26 +397,4 @@ public class AuthorsView extends BaseView<Author> {
     protected Class<Author> getEntityClass() {
         return Author.class;
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea actionResultArea;
-    private javax.swing.JButton buttonDelete;
-    private javax.swing.JButton buttonEdit;
-    private javax.swing.JButton buttonMainScreen;
-    private javax.swing.JButton buttonNew;
-    private javax.swing.JButton buttonSave;
-    private javax.swing.JButton buttonSearch;
-    private javax.swing.JTextField fieldBirthDate;
-    private javax.swing.JTextField fieldHometown;
-    private javax.swing.JTextField fieldName;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel labelAuthor;
-    private javax.swing.JLabel labelHeader;
-    private javax.swing.JLabel labelHometown;
-    private javax.swing.JLabel labelName;
-    private javax.swing.JList<String> entitiesList;
-    private javax.swing.JPanel panelButtons;
-    private javax.swing.JPanel panelInput;
-    // End of variables declaration//GEN-END:variables
 }
