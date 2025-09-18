@@ -131,6 +131,12 @@ public class BooksView extends BaseView<Book> {
         
     }
 
+    @Override
+    protected void clearTextFields() {
+        super.clearTextFields();
+        this.comboBoxAuthors.setSelectedIndex(0);
+    }
+
     private boolean isYearValid() {
         String year = this.fieldPublishedYear.getText();
         try {
