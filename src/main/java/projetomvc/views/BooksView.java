@@ -65,7 +65,6 @@ public class BooksView extends BaseView<Book> {
     @Override
     protected void setEntitiesResult(List<Book> entities) {
         if (entities != null && !entities.isEmpty()) {
-            super.clearTextFields();
             this.actionResultArea.setText("Livros encontrados:\n");
             for (Book entity : entities) {
                 this.actionResultArea.append("Título: " + entity.getTitle() + ", Autor: " + super.getController(Author.class).show(entity.getAuthorId()).getName() + ", Ano: " + entity.getPublishedYear() + "\n");

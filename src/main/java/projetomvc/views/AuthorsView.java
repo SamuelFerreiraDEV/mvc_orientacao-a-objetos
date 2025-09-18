@@ -91,7 +91,6 @@ public class AuthorsView extends BaseView<Author> {
     @Override
     protected void setEntitiesResult(List<Author> entities) {
         if (entities != null && !entities.isEmpty()) {
-            super.clearTextFields();
             this.actionResultArea.setText("Autores encontrados:\n");
             for (Author entity : entities) {
                 this.actionResultArea.append("Nome: " + entity.getName() + ", Cidade Natal: " + entity.getHometown() + ", Data de nascimento: " + entity.getBirthDate() + "\n");
