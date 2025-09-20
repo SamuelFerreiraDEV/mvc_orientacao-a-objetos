@@ -130,7 +130,6 @@ public abstract class BaseView<T> extends javax.swing.JFrame {
         if (entities != null && !entities.isEmpty()) {
             return entities;
         } else {
-            JOptionPane.showMessageDialog(this, "Não encontrado.", "Busca", JOptionPane.INFORMATION_MESSAGE);
             return null;
         }
     }
