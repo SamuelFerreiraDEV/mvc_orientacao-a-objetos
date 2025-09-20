@@ -8,13 +8,17 @@ import java.util.stream.Collectors;
 
 import projetomvc.models.dao.interfaces.DAO;
 import projetomvc.models.entities.Author;
+import projetomvc.models.entities.Book;
+import projetomvc.services.interfaces.BookServiceInterface;
 import projetomvc.validators.ValidationResult;
 import projetomvc.validators.interfaces.Validator;
 
 public class AuthorController extends Controller<Author> {
+    private final BookServiceInterface<Book> bookService;
 
-    public AuthorController(DAO<Author> dao, Validator<Author> validator) {
+    public AuthorController(DAO<Author> dao, Validator<Author> validator, BookServiceInterface<Book> bookService) {
         super(dao, validator);
+        this.bookService = bookService;
     }
 
     @Override

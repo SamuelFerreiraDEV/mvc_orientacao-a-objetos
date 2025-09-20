@@ -12,6 +12,8 @@ import projetomvc.models.dao.database.DatabaseBookDAO;
 import projetomvc.models.dao.interfaces.DAO;
 import projetomvc.models.entities.Author;
 import projetomvc.models.entities.Book;
+import projetomvc.services.BookService;
+import projetomvc.services.interfaces.BookServiceInterface;
 import projetomvc.validators.AuthorValidator;
 import projetomvc.validators.BookValidator;
 import projetomvc.validators.interfaces.Validator;
@@ -29,7 +31,8 @@ public class Library {
             DAO<Book> bookDB = new DatabaseBookDAO(connection);
             Validator<Author> authorValidator = new AuthorValidator();
             Validator<Book> bookValidator = new BookValidator();
-            Controller<Author> authorController = new AuthorController(authorDB, authorValidator);
+            BookServiceInterface<Book> bookService = new BookService(bookDB);
+            Controller<Author> authorController = new AuthorController(authorDB, authorValidator, bookService);
             Controller<Book> bookController = new BookController(bookDB, bookValidator);
     
             MainView mainView = new MainView();
