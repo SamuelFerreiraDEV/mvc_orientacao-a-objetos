@@ -18,7 +18,7 @@ public class DatabaseAuthorDAO extends databaseDAO<Author>  {
 
     @Override
 	public boolean save(Author author) throws SQLException {
-		String sql = "INSERT INTO author (name, hometown, birth_date) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO authors (name, hometown, birth_date) VALUES (?, ?, ?)";
 
 		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setString(1, author.getName());
@@ -34,7 +34,7 @@ public class DatabaseAuthorDAO extends databaseDAO<Author>  {
 
 	@Override
 	public boolean update(int authorId, Author author) throws SQLException {
-		String sql = "UPDATE author SET name = ?, hometown = ?, birth_date = ? WHERE id = ?";
+		String sql = "UPDATE authors SET name = ?, hometown = ?, birth_date = ? WHERE id = ?";
 
 		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setString(1, author.getName());
@@ -51,7 +51,7 @@ public class DatabaseAuthorDAO extends databaseDAO<Author>  {
 	
 	@Override
 	public boolean delete(int authorId) throws SQLException {
-		String sql = "DELETE FROM author WHERE id = ?";
+		String sql = "DELETE FROM authors WHERE id = ?";
 		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setInt(1, authorId);
 	
@@ -64,7 +64,7 @@ public class DatabaseAuthorDAO extends databaseDAO<Author>  {
 
 	@Override
 	public Author find(int authorId) throws SQLException {
-		String sql = "SELECT * FROM author WHERE id = ? LIMIT 1";
+		String sql = "SELECT * FROM authors WHERE id = ? LIMIT 1";
 		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setInt(1, authorId);
 			ResultSet rs = stmt.executeQuery();
@@ -84,7 +84,7 @@ public class DatabaseAuthorDAO extends databaseDAO<Author>  {
 
 	@Override
 	public List<Author> find(HashMap<String, String> params) throws SQLException {
-		StringBuilder sql = new StringBuilder("SELECT * FROM author WHERE 1=1");
+		StringBuilder sql = new StringBuilder("SELECT * FROM authors WHERE 1=1");
 		for(String key : params.keySet()) {
 			switch (key) {
 				case "name":
@@ -123,7 +123,7 @@ public class DatabaseAuthorDAO extends databaseDAO<Author>  {
 
 	@Override
 	public List<Author> findAll() throws SQLException {
-		String sql = "SELECT * FROM author;";
+		String sql = "SELECT * FROM authors;";
 		
 		try(PreparedStatement stmt = connection.prepareStatement(sql)) {
 			ResultSet rs = stmt.executeQuery();

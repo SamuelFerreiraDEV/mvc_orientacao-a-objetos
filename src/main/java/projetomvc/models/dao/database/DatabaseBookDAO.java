@@ -18,7 +18,7 @@ public class DatabaseBookDAO extends databaseDAO<Book> {
 
     @Override
 	public boolean save(Book book) throws SQLException {
-		String sql = "INSERT INTO book (title, author_id, published_year) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO books (title, author_id, published_year) VALUES (?, ?, ?)";
 
 		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setString(1, book.getTitle());
@@ -34,7 +34,7 @@ public class DatabaseBookDAO extends databaseDAO<Book> {
 
 	@Override
 	public boolean update(int bookId, Book book) throws SQLException {
-		String sql = "UPDATE book SET title = ?, author_id = ?, published_year = ? WHERE id = ?";
+		String sql = "UPDATE books SET title = ?, author_id = ?, published_year = ? WHERE id = ?";
 
 		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setString(1, book.getTitle());
@@ -51,7 +51,7 @@ public class DatabaseBookDAO extends databaseDAO<Book> {
 	
 	@Override
 	public boolean delete(int bookId) throws SQLException {
-		String sql = "DELETE FROM book WHERE id = ?";
+		String sql = "DELETE FROM books WHERE id = ?";
 		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setInt(1, bookId);
 	
@@ -64,7 +64,7 @@ public class DatabaseBookDAO extends databaseDAO<Book> {
 
 	@Override
 	public Book find(int bookId) throws SQLException {
-		String sql = "SELECT * FROM book WHERE id = ?";
+		String sql = "SELECT * FROM books WHERE id = ?";
 		try (PreparedStatement stmt = connection.prepareStatement(sql)) {
 			stmt.setInt(1, bookId);
 			ResultSet rs = stmt.executeQuery();
@@ -84,7 +84,7 @@ public class DatabaseBookDAO extends databaseDAO<Book> {
 
 	@Override
 	public List<Book> find(HashMap<String, String> params) throws SQLException {
-		StringBuilder sql = new StringBuilder("SELECT * FROM book WHERE 1=1");
+		StringBuilder sql = new StringBuilder("SELECT * FROM books WHERE 1=1");
 
 		for(String key : params.keySet()) {
 			switch (key) {
@@ -125,7 +125,7 @@ public class DatabaseBookDAO extends databaseDAO<Book> {
 
 	@Override
 	public List<Book> findAll() throws SQLException {
-		String sql = "SELECT * FROM book;";
+		String sql = "SELECT * FROM books;";
 		
 		try(PreparedStatement stmt = connection.prepareStatement(sql)) {
 			ResultSet rs = stmt.executeQuery();
