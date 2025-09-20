@@ -102,6 +102,11 @@ public class AuthorController extends Controller<Author> {
     @Override
     public boolean delete(int id) {
         try {
+            boolean hasBooks = this.bookService.authorHasBooks(id);
+            if (hasBooks) {
+                System.err.println("Não é possível deletar um Autor que tenha livros.");
+                return false;
+            }
             return dao.delete(id);
         } catch (SQLException e) {
             System.err.println(e.getMessage());
