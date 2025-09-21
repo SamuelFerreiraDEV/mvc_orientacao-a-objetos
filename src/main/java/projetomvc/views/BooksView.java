@@ -69,6 +69,9 @@ public class BooksView extends BaseView<Book> {
             for (Book entity : entities) {
                 this.actionResultArea.append("Título: " + entity.getTitle() + ", Autor: " + super.getController(Author.class).show(entity.getAuthorId()).getName() + ", Ano: " + entity.getPublishedYear() + "\n");
             }
+        } else {
+            this.actionResultArea.setText("Nenhum livro encontrado.");
+
         }
     }
 
@@ -76,6 +79,8 @@ public class BooksView extends BaseView<Book> {
     protected void updateEntitiesList(List<Book> entities) {
         if (entities != null && !entities.isEmpty()) {
             this.entitiesList.setListData(entities.stream().map(entity -> entity.getId() + ": " + entity.getTitle()).toArray(String[]::new));
+        } else {
+            this.entitiesList.setListData(new String[0]);
         }
     }
 

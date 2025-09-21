@@ -95,12 +95,17 @@ public class AuthorsView extends BaseView<Author> {
             for (Author entity : entities) {
                 this.actionResultArea.append("Nome: " + entity.getName() + ", Cidade Natal: " + entity.getHometown() + ", Data de nascimento: " + entity.getBirthDate() + "\n");
             }
+        } else {
+            this.actionResultArea.setText("Nenhum autor encontrado.");
+
         }
     }
 
     protected void updateEntitiesList(List<Author> entities) {
         if (entities != null && !entities.isEmpty()) {
             this.entitiesList.setListData(entities.stream().map(entity -> entity.getId() + ": " + entity.getName()).toArray(String[]::new));
+        } else {
+            this.entitiesList.setListData(new String[0]);
         }
     }
 
