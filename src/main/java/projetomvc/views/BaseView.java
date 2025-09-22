@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import projetomvc.controllers.Controller;
+import projetomvc.controllers.interfaces.Controller;
 import projetomvc.models.entities.Author;
 import projetomvc.models.entities.Book;
 import projetomvc.views.interfaces.ViewNavigator;

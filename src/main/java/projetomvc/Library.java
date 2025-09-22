@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import projetomvc.connections.SQLiteConnector;
 import projetomvc.controllers.AuthorController;
 import projetomvc.controllers.BookController;
-import projetomvc.controllers.Controller;
+import projetomvc.controllers.interfaces.Controller;
 import projetomvc.models.dao.database.DatabaseAuthorDAO;
 import projetomvc.models.dao.database.DatabaseBookDAO;
 import projetomvc.models.dao.interfaces.DAO;

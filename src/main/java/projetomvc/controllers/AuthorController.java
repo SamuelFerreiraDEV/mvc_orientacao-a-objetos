@@ -11,7 +11,7 @@ import projetomvc.services.interfaces.BookServiceInterface;
 import projetomvc.validators.ValidationResult;
 import projetomvc.validators.interfaces.Validator;
 
-public class AuthorController extends Controller<Author> {
+public class AuthorController extends BaseController<Author> {
     private final BookServiceInterface<Book> bookService;
 
     public AuthorController(DAO<Author> dao, Validator<Author> validator, BookServiceInterface<Book> bookService) {
