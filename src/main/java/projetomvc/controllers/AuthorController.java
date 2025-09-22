@@ -1,14 +1,11 @@
 package projetomvc.controllers;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
 
 import projetomvc.models.dao.interfaces.DAO;
 import projetomvc.models.entities.Author;
 import projetomvc.models.entities.Book;
 import projetomvc.services.interfaces.BookServiceInterface;
-import projetomvc.validators.ValidationResult;
 import projetomvc.validators.interfaces.Validator;
 
 public class AuthorController extends BaseController<Author> {
@@ -17,76 +14,6 @@ public class AuthorController extends BaseController<Author> {
     public AuthorController(DAO<Author> dao, Validator<Author> validator, BookServiceInterface<Book> bookService) {
         super(dao, validator);
         this.bookService = bookService;
-    }
-
-    @Override
-    public List<Author> index(HashMap<String, String> params) {
-        try {
-            HashMap<String, String> filteredParams = super.filterInvalidParams(params);
-            return !filteredParams.isEmpty() ? dao.find(filteredParams) : dao.findAll();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            return null;
-        }
-    }
-
-    @Override
-    public Author show(int id) {
-        try {
-            return dao.find(id);
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            return null;
-        }
-    }
-
-    @Override
-    public Author newForm() {
-        return new Author();
-    }
-
-    @Override
-    public Author edit(int id) {
-        try {
-            return dao.find(id);
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            return null;
-        }
-    }
-
-    @Override
-    public boolean create(Author author) {
-        ValidationResult authorValidation = validator.validate(author);
-
-        if (!authorValidation.isValid()) {
-            System.err.println(authorValidation.getErrorsAsString());
-            return false;
-        }
-
-        try {
-            return dao.save(author);
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            return false;
-        }
-    }
-
-    @Override
-    public boolean update(int id, Author author) {
-        ValidationResult authorValidation = validator.validate(author);
-
-        if (!authorValidation.isValid()) {
-            System.err.println(authorValidation.getErrorsAsString());
-            return false;
-        }
-
-        try {
-            return dao.update(id, author);
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            return false;
-        }
     }
     
     @Override
