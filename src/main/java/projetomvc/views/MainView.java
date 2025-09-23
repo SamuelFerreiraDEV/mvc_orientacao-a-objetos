@@ -4,6 +4,9 @@
  */
 package projetomvc.views;
 
+import projetomvc.models.entities.Author;
+import projetomvc.models.entities.Book;
+import projetomvc.views.interfaces.EntityView;
 import projetomvc.views.interfaces.ViewNavigator;
 
 /**
@@ -13,8 +16,8 @@ import projetomvc.views.interfaces.ViewNavigator;
 public class MainView extends javax.swing.JFrame implements ViewNavigator {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainView.class.getName());
-    private BooksView booksView;
-    private AuthorsView authorsView;
+    private EntityView<Book> booksView;
+    private EntityView<Author> authorsView;
     
     /**
      * Creates new form MainView
@@ -119,11 +122,11 @@ public class MainView extends javax.swing.JFrame implements ViewNavigator {
         this.authorsView.setVisible(true);
     }
 
-    public void setBooksView(BooksView booksView) {
+    public void setBooksView(EntityView<Book> booksView) {
         this.booksView = booksView;
     }
 
-    public void setAuthorsView(AuthorsView authorsView) {
+    public void setAuthorsView(EntityView<Author> authorsView) {
         this.authorsView = authorsView;
     }
 

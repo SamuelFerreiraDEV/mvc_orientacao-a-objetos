@@ -33,7 +33,7 @@ public class AuthorsView extends BaseView<Author> {
     }
 
     @Override
-    protected void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {
+    public void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {
         if (super.selectedEntityId != null) {
             Author author = super.getController(Author.class).show(super.selectedEntityId);
 
@@ -50,7 +50,7 @@ public class AuthorsView extends BaseView<Author> {
     }
 
     @Override
-    protected Author buildEntityFromInputs() {
+    public Author buildEntityFromInputs() {
         Author author = new Author();
 
         author.setName(this.fieldName.getText());
@@ -61,7 +61,7 @@ public class AuthorsView extends BaseView<Author> {
     }
 
     @Override
-    protected void displayActionResultText(String action, boolean success, Author author) {
+    public void displayActionResultText(String action, boolean success, Author author) {
         String result = "";
         switch (action) {
             case "save":
@@ -78,7 +78,7 @@ public class AuthorsView extends BaseView<Author> {
     }
 
     @Override
-    protected HashMap<String, String> buildParams() {
+    public HashMap<String, String> buildParams() {
         HashMap<String, String> params = new HashMap<>();
         
         params.put("name", this.fieldName.getText());
@@ -89,7 +89,7 @@ public class AuthorsView extends BaseView<Author> {
     }
 
     @Override
-    protected void setEntitiesResult(List<Author> entities) {
+    public void setEntitiesResult(List<Author> entities) {
         if (entities != null && !entities.isEmpty()) {
             this.actionResultArea.setText("Autores encontrados:\n");
             for (Author entity : entities) {
@@ -101,7 +101,7 @@ public class AuthorsView extends BaseView<Author> {
         }
     }
 
-    protected void updateEntitiesList(List<Author> entities) {
+    public void updateEntitiesList(List<Author> entities) {
         if (entities != null && !entities.isEmpty()) {
             this.entitiesList.setListData(entities.stream().map(entity -> entity.getId() + ": " + entity.getName()).toArray(String[]::new));
         } else {
@@ -119,7 +119,7 @@ public class AuthorsView extends BaseView<Author> {
     }
 
     @Override
-    protected Class<Author> getEntityClass() {
+    public Class<Author> getEntityClass() {
         return Author.class;
     }
 

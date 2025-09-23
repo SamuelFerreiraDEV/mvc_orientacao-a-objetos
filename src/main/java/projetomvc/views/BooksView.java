@@ -34,7 +34,7 @@ public class BooksView extends BaseView<Book> {
     }
 
     @Override
-    protected void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {
+    public void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {
         if (super.selectedEntityId != null) {
             Book book = super.getController(Book.class).show(super.selectedEntityId);
 
@@ -51,7 +51,7 @@ public class BooksView extends BaseView<Book> {
     }
 
     @Override
-    protected HashMap<String, String> buildParams() {
+    public HashMap<String, String> buildParams() {
         HashMap<String, String> params = new HashMap<>();
         int authorId = this.getAuthorIdByName(this.comboBoxAuthors.getSelectedItem().toString());
         
@@ -63,7 +63,7 @@ public class BooksView extends BaseView<Book> {
     }
 
     @Override
-    protected void setEntitiesResult(List<Book> entities) {
+    public void setEntitiesResult(List<Book> entities) {
         if (entities != null && !entities.isEmpty()) {
             this.actionResultArea.setText("Livros encontrados:\n");
             for (Book entity : entities) {
@@ -76,7 +76,7 @@ public class BooksView extends BaseView<Book> {
     }
 
     @Override
-    protected void updateEntitiesList(List<Book> entities) {
+    public void updateEntitiesList(List<Book> entities) {
         if (entities != null && !entities.isEmpty()) {
             this.entitiesList.setListData(entities.stream().map(entity -> entity.getId() + ": " + entity.getTitle()).toArray(String[]::new));
         } else {
@@ -85,7 +85,7 @@ public class BooksView extends BaseView<Book> {
     }
 
     @Override
-    protected Book buildEntityFromInputs() {
+    public Book buildEntityFromInputs() {
         Book book = new Book();
         int authorId = this.getAuthorIdByName(this.comboBoxAuthors.getSelectedItem().toString());
 
@@ -118,7 +118,7 @@ public class BooksView extends BaseView<Book> {
     }
 
     @Override
-    protected void displayActionResultText(String action, boolean success, Book book) {
+    public void displayActionResultText(String action, boolean success, Book book) {
         String result = "";
         switch (action) {
             case "save":
@@ -176,7 +176,7 @@ public class BooksView extends BaseView<Book> {
     }
 
     @Override
-    protected Class<Book> getEntityClass() {
+    public Class<Book> getEntityClass() {
         return Book.class;
     }
 

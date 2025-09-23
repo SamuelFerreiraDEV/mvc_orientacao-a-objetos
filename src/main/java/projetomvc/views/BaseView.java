@@ -10,9 +10,10 @@ import javax.swing.JTextField;
 import projetomvc.controllers.interfaces.Controller;
 import projetomvc.models.entities.Author;
 import projetomvc.models.entities.Book;
+import projetomvc.views.interfaces.EntityView;
 import projetomvc.views.interfaces.ViewNavigator;
 
-public abstract class BaseView<T> extends javax.swing.JFrame {
+public abstract class BaseView<T> extends javax.swing.JFrame implements EntityView<T> {
 	protected JTextField[] textFields;
     protected Integer selectedEntityId = null;
 	protected final ViewNavigator navigator;
@@ -32,14 +33,6 @@ public abstract class BaseView<T> extends javax.swing.JFrame {
     protected javax.swing.JPanel panelInput;
     protected javax.swing.JTextArea actionResultArea;
 
-    protected abstract HashMap<String, String> buildParams();
-    protected abstract void setEntitiesResult(List<T> entities);
-    protected abstract void updateEntitiesList(List<T> entities);
-    protected abstract Class<T> getEntityClass();
-    protected abstract T buildEntityFromInputs();
-    protected abstract void displayActionResultText(String action, boolean success, T entity);
-    protected abstract void buttonEditActionPerformed(java.awt.event.ActionEvent evt);
-
     public BaseView(JTextField[] textFields, ViewNavigator navigator, Controller<Author> authorController, Controller<Book> bookController) {
 		this.textFields = textFields;
 		this.navigator = navigator;
@@ -47,22 +40,22 @@ public abstract class BaseView<T> extends javax.swing.JFrame {
         this.controllers.put(Book.class, bookController);
 	}
 
-    private void buttonMainScreenActionPerformed(java.awt.event.ActionEvent evt) {                                                 
+    public void buttonMainScreenActionPerformed(java.awt.event.ActionEvent evt) {
         this.setVisible(false);
         this.navigator.showMainView();
     }
 
-    private void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {
+    public void buttonNewActionPerformed(java.awt.event.ActionEvent evt) {
         this.clearTextFields();
         this.entitiesList.clearSelection();
         this.selectedEntityId = null;
     }
 
-    private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {
+    public void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {
         this.displayEntities(true, true);
     }
 
-    private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {
+    public void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {
         if (this.selectedEntityId != null) {
             T entity = this.getController(this.getEntityClass()).show(this.selectedEntityId);
             boolean deleted = this.getController(this.getEntityClass()).delete(this.selectedEntityId);
@@ -78,7 +71,7 @@ public abstract class BaseView<T> extends javax.swing.JFrame {
         }
     }
 
-    private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {
+    public void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {
         if(this.fieldsValid()) {
             T entity = buildEntityFromInputs();
             boolean persisted = false;

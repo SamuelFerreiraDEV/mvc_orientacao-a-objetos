@@ -20,6 +20,7 @@ import projetomvc.validators.interfaces.Validator;
 import projetomvc.views.AuthorsView;
 import projetomvc.views.BooksView;
 import projetomvc.views.MainView;
+import projetomvc.views.interfaces.EntityView;
 
 public class Library {
     public static void main(String[] args) {
@@ -36,8 +37,8 @@ public class Library {
             Controller<Book> bookController = new BookController(bookDB, bookValidator);
     
             MainView mainView = new MainView();
-            AuthorsView authorsView = new AuthorsView(mainView, authorController, bookController);
-            BooksView booksView = new BooksView(mainView, authorController, bookController);
+            EntityView<Author> authorsView = new AuthorsView(mainView, authorController, bookController);
+            EntityView<Book> booksView = new BooksView(mainView, authorController, bookController);
             mainView.setAuthorsView(authorsView);
             mainView.setBooksView(booksView);
             mainView.setVisible(true);
