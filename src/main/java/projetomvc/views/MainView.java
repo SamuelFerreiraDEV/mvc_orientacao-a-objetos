@@ -4,8 +4,6 @@
  */
 package projetomvc.views;
 
-import projetomvc.models.entities.Author;
-import projetomvc.models.entities.Book;
 import projetomvc.views.interfaces.EntityView;
 import projetomvc.views.interfaces.ViewNavigator;
 
@@ -13,12 +11,12 @@ import projetomvc.views.interfaces.ViewNavigator;
  *
  * @author samuel
  */
-public class MainView extends javax.swing.JFrame implements ViewNavigator {
-    
+public class MainView<T, K> extends javax.swing.JFrame implements ViewNavigator<T, K> {
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainView.class.getName());
-    private EntityView<Book> booksView;
-    private EntityView<Author> authorsView;
-    
+    private EntityView<T> authorsView;
+    private EntityView<K> booksView;
+
     /**
      * Creates new form MainView
      */
@@ -106,27 +104,25 @@ public class MainView extends javax.swing.JFrame implements ViewNavigator {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    @Override public void showMainView() {
+    public void showMainView() {
         this.setVisible(true);
     }
 
-    @Override
     public void showBooksView() {
         this.setVisible(false);
         this.booksView.setVisible(true);
     }
 
-    @Override
     public void showAuthorsView() {
         this.setVisible(false);
         this.authorsView.setVisible(true);
     }
-
-    public void setBooksView(EntityView<Book> booksView) {
+    
+    public void setBooksView(EntityView<K> booksView) {
         this.booksView = booksView;
     }
 
-    public void setAuthorsView(EntityView<Author> authorsView) {
+    public void setAuthorsView(EntityView<T> authorsView) {
         this.authorsView = authorsView;
     }
 

@@ -21,6 +21,7 @@ import projetomvc.views.AuthorsView;
 import projetomvc.views.BooksView;
 import projetomvc.views.MainView;
 import projetomvc.views.interfaces.EntityView;
+import projetomvc.views.interfaces.ViewNavigator;
 
 public class Library {
     public static void main(String[] args) {
@@ -35,8 +36,7 @@ public class Library {
             BookServiceInterface<Book> bookService = new BookService(bookDB);
             Controller<Author> authorController = new AuthorController(authorDB, authorValidator, bookService);
             Controller<Book> bookController = new BookController(bookDB, bookValidator);
-    
-            MainView mainView = new MainView();
+            ViewNavigator<Author, Book> mainView = new MainView<>();
             EntityView<Author> authorsView = new AuthorsView(mainView, authorController, bookController);
             EntityView<Book> booksView = new BooksView(mainView, authorController, bookController);
             mainView.setAuthorsView(authorsView);
