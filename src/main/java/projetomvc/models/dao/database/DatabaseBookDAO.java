@@ -100,6 +100,7 @@ public class DatabaseBookDAO extends databaseDAO<Book> {
 				case "publishedYear":
 					sql.append(" AND published_year = ?");
 					paramsValues.add(params.get(key));
+					break;
 				default:
 					throw new IllegalArgumentException("Unknown parameter: " + key);
 			}

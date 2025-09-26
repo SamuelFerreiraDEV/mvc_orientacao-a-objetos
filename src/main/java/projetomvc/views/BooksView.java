@@ -57,7 +57,7 @@ public class BooksView extends BaseView<Book> {
         
         params.put("title", this.fieldTitle.getText());
         params.put("authorId", String.valueOf(authorId));
-        params.put("year", String.valueOf(this.fieldPublishedYear.getText()));
+        params.put("publishedYear", String.valueOf(this.fieldPublishedYear.getText()));
 
         return params;
     }

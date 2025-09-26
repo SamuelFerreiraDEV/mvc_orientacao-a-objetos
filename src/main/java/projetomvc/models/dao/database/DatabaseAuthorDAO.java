@@ -96,9 +96,11 @@ public class DatabaseAuthorDAO extends databaseDAO<Author>  {
 				case "hometown":
 					sql.append(" AND hometown LIKE ?");
 					paramsValues.add("%" + params.get(key) + "%");
+					break;
 				case "birthDate":
 					sql.append(" AND birth_date = ?");
 					paramsValues.add(params.get(key));
+					break;
 				default:
 					throw new IllegalArgumentException("Unknown parameter: " + key);
 			}
