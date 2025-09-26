@@ -15,7 +15,7 @@ import projetomvc.views.interfaces.ViewNavigator;
  *
  * @author samuel
  */
-public class BooksView extends BaseView<Book> {
+public class BooksView extends BaseView<Author, Book, Book> {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BooksView.class.getName());
 
     private javax.swing.JLabel labelTitle;
@@ -25,7 +25,7 @@ public class BooksView extends BaseView<Book> {
     private javax.swing.JTextField fieldPublishedYear;
     private javax.swing.JComboBox<String> comboBoxAuthors;
 
-    public BooksView(ViewNavigator navigator, Controller<Author> authorController, Controller<Book> bookController) {
+    public BooksView(ViewNavigator<Author, Book> navigator, Controller<Author> authorController, Controller<Book> bookController) {
         super(new JTextField[] {}, navigator, authorController, bookController);
         initComponents();
         super.textFields = new JTextField[] { this.fieldTitle, this.fieldPublishedYear };

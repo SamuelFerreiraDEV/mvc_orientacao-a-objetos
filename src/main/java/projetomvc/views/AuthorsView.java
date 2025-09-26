@@ -15,7 +15,7 @@ import projetomvc.views.interfaces.ViewNavigator;
  *
  * @author samuel
  */
-public class AuthorsView extends BaseView<Author> {
+public class AuthorsView extends BaseView<Author, Book, Author> {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AuthorsView.class.getName());
 
     private javax.swing.JLabel labelName;
@@ -25,7 +25,7 @@ public class AuthorsView extends BaseView<Author> {
     private javax.swing.JTextField fieldHometown;
     private javax.swing.JTextField fieldBirthDate;
 
-    public AuthorsView(ViewNavigator navigator, Controller<Author> authorController, Controller<Book> bookController) {
+    public AuthorsView(ViewNavigator<Author, Book> navigator, Controller<Author> authorController, Controller<Book> bookController) {
         super(new JTextField[] {}, navigator, authorController, bookController);
         initComponents();
         super.textFields = new JTextField[] { this.fieldName, this.fieldBirthDate, this.fieldHometown };

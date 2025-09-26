@@ -13,10 +13,10 @@ import projetomvc.models.entities.Book;
 import projetomvc.views.interfaces.EntityView;
 import projetomvc.views.interfaces.ViewNavigator;
 
-public abstract class BaseView<T> extends javax.swing.JFrame implements EntityView<T> {
+public abstract class BaseView<T, K, E> extends javax.swing.JFrame implements EntityView<E> {
 	protected JTextField[] textFields;
     protected Integer selectedEntityId = null;
-	protected final ViewNavigator navigator;
+	protected final ViewNavigator<T, K> navigator;
     private final Map<Class<?>, Controller<?>> controllers = new HashMap<>();
 
     protected javax.swing.JList<String> entitiesList;
@@ -33,7 +33,7 @@ public abstract class BaseView<T> extends javax.swing.JFrame implements EntityVi
     protected javax.swing.JPanel panelInput;
     protected javax.swing.JTextArea actionResultArea;
 
-    public BaseView(JTextField[] textFields, ViewNavigator navigator, Controller<Author> authorController, Controller<Book> bookController) {
+    public BaseView(JTextField[] textFields, ViewNavigator<T, K> navigator, Controller<T> authorController, Controller<K> bookController) {
 		this.textFields = textFields;
 		this.navigator = navigator;
         this.controllers.put(Author.class, authorController);
@@ -57,7 +57,7 @@ public abstract class BaseView<T> extends javax.swing.JFrame implements EntityVi
 
     public void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {
         if (this.selectedEntityId != null) {
-            T entity = this.getController(this.getEntityClass()).show(this.selectedEntityId);
+            E entity = this.getController(this.getEntityClass()).show(this.selectedEntityId);
             boolean deleted = this.getController(this.getEntityClass()).delete(this.selectedEntityId);
             this.displayActionResultText("delete", deleted, entity);
             this.displayEntities(false, true);
@@ -73,7 +73,7 @@ public abstract class BaseView<T> extends javax.swing.JFrame implements EntityVi
 
     public void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {
         if(this.fieldsValid()) {
-            T entity = buildEntityFromInputs();
+            E entity = buildEntityFromInputs();
             boolean persisted = false;
             String action = null;
 
@@ -107,7 +107,7 @@ public abstract class BaseView<T> extends javax.swing.JFrame implements EntityVi
     }
 
     protected void displayEntities(boolean updateActionResultArea, boolean updateEntitiesList) {
-        List<T> entities = this.searchEntities();
+        List<E> entities = this.searchEntities();
         if (updateActionResultArea) {
             this.setEntitiesResult(entities);
         }
@@ -116,9 +116,9 @@ public abstract class BaseView<T> extends javax.swing.JFrame implements EntityVi
         }
     }
 
-    protected List<T> searchEntities() {
+    protected List<E> searchEntities() {
         HashMap<String, String> params = this.buildParams();
-        List<T> entities = this.getController(this.getEntityClass()).index(params);
+        List<E> entities = this.getController(this.getEntityClass()).index(params);
 
         if (entities != null && !entities.isEmpty()) {
             return entities;
@@ -128,8 +128,8 @@ public abstract class BaseView<T> extends javax.swing.JFrame implements EntityVi
     }
 
     @SuppressWarnings("unchecked")
-    protected <E> Controller<E> getController(Class<E> clazz) {
-        Controller<E> controller = (Controller<E>) controllers.get(clazz);
+    protected <C> Controller<C> getController(Class<C> clazz) {
+        Controller<C> controller = (Controller<C>) controllers.get(clazz);
         if (controller == null) {
             throw new IllegalArgumentException("Controller não encontrado para classe " + clazz.getName());
         }
