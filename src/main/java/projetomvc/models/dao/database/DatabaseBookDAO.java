@@ -85,25 +85,29 @@ public class DatabaseBookDAO extends databaseDAO<Book> {
 	@Override
 	public List<Book> find(HashMap<String, String> params) throws SQLException {
 		StringBuilder sql = new StringBuilder("SELECT * FROM books WHERE 1=1");
+		List<String> paramsValues = new ArrayList<>();
 
 		for(String key : params.keySet()) {
 			switch (key) {
 				case "title":
 					sql.append(" AND title LIKE ?");
+					paramsValues.add("%" + params.get(key) + "%");
 					break;
 				case "authorId":
 					sql.append(" AND author_id = ?");
+					paramsValues.add(params.get(key));
 					break;
 				case "publishedYear":
 					sql.append(" AND published_year = ?");
+					paramsValues.add(params.get(key));
 				default:
-					return null;
+					throw new IllegalArgumentException("Unknown parameter: " + key);
 			}
 		}
 
 		try (PreparedStatement stmt = connection.prepareStatement(sql.toString())) {
-			for (int i = 1; i <= params.size(); i++) {
-				stmt.setObject(i, params.values().toArray()[i-1]);
+			for (int i = 0; i < paramsValues.size(); i++) {
+				stmt.setString(i + 1, paramsValues.get(i));
 			}
 			ResultSet rs = stmt.executeQuery();
 
