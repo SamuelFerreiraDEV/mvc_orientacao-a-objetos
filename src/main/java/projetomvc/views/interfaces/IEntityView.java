@@ -3,7 +3,7 @@ package projetomvc.views.interfaces;
 import java.util.HashMap;
 import java.util.List;
 
-public interface EntityView<T> {
+public interface IEntityView<T> {
 	void buttonMainScreenActionPerformed(java.awt.event.ActionEvent evt);
 	void buttonNewActionPerformed(java.awt.event.ActionEvent evt);
 	void buttonSearchActionPerformed(java.awt.event.ActionEvent evt);

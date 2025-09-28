@@ -2,6 +2,6 @@ package projetomvc.validators.interfaces;
 
 import projetomvc.validators.ValidationResult;
 
-public interface Validator<T> {
+public interface IValidator<T> {
     ValidationResult validate(T entity);
 }

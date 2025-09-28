@@ -6,22 +6,22 @@ import java.sql.SQLException;
 import projetomvc.connections.SQLiteConnector;
 import projetomvc.controllers.AuthorController;
 import projetomvc.controllers.BookController;
-import projetomvc.controllers.interfaces.Controller;
+import projetomvc.controllers.interfaces.IController;
 import projetomvc.models.dao.database.AuthorDAO;
 import projetomvc.models.dao.database.BookDAO;
-import projetomvc.models.dao.interfaces.DAO;
+import projetomvc.models.dao.interfaces.IDAO;
 import projetomvc.models.entities.Author;
 import projetomvc.models.entities.Book;
 import projetomvc.services.BookService;
-import projetomvc.services.interfaces.BookServiceInterface;
+import projetomvc.services.interfaces.IBookService;
 import projetomvc.validators.AuthorValidator;
 import projetomvc.validators.BookValidator;
-import projetomvc.validators.interfaces.Validator;
+import projetomvc.validators.interfaces.IValidator;
 import projetomvc.views.AuthorsView;
 import projetomvc.views.BooksView;
 import projetomvc.views.MainView;
-import projetomvc.views.interfaces.EntityView;
-import projetomvc.views.interfaces.ViewNavigator;
+import projetomvc.views.interfaces.IEntityView;
+import projetomvc.views.interfaces.IViewNavigator;
 
 public class ApplicationInitializer {
 	public void initialize()  {
@@ -29,20 +29,20 @@ public class ApplicationInitializer {
 			SQLiteConnector sqlite = new SQLiteConnector("Library");
 			Connection connection = sqlite.getConnection();
 
-			DAO<Author> authorDB = new AuthorDAO(connection);
-			DAO<Book> bookDB = new BookDAO(connection);
+			IDAO<Author> authorDB = new AuthorDAO(connection);
+			IDAO<Book> bookDB = new BookDAO(connection);
 
-			Validator<Author> authorValidator = new AuthorValidator();
-			Validator<Book> bookValidator = new BookValidator();
+			IValidator<Author> authorValidator = new AuthorValidator();
+			IValidator<Book> bookValidator = new BookValidator();
 
-			BookServiceInterface<Book> bookService = new BookService(bookDB);
+			IBookService<Book> bookService = new BookService(bookDB);
 
-			Controller<Author> authorController = new AuthorController(authorDB, authorValidator, bookService);
-			Controller<Book> bookController = new BookController(bookDB, bookValidator);
+			IController<Author> authorController = new AuthorController(authorDB, authorValidator, bookService);
+			IController<Book> bookController = new BookController(bookDB, bookValidator);
 
-			ViewNavigator<Author, Book> mainView = new MainView<>();
-			EntityView<Author> authorsView = new AuthorsView(mainView, authorController, bookController);
-			EntityView<Book> booksView = new BooksView(mainView, authorController, bookController);
+			IViewNavigator<Author, Book> mainView = new MainView<>();
+			IEntityView<Author> authorsView = new AuthorsView(mainView, authorController, bookController);
+			IEntityView<Book> booksView = new BooksView(mainView, authorController, bookController);
 
 			mainView.setAuthorsView(authorsView);
 			mainView.setBooksView(booksView);

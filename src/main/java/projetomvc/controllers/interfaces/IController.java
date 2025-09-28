@@ -3,7 +3,7 @@ package projetomvc.controllers.interfaces;
 import java.util.HashMap;
 import java.util.List;
 
-public interface Controller<T> {
+public interface IController<T> {
 	abstract List<T> index(HashMap<String, String> params);
     abstract T show(int id);
     abstract T edit(int id);

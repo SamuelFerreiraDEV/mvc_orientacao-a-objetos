@@ -1,9 +1,9 @@
 package projetomvc.controllers;
 
-import projetomvc.controllers.interfaces.Controller;
-import projetomvc.models.dao.interfaces.DAO;
+import projetomvc.controllers.interfaces.IController;
+import projetomvc.models.dao.interfaces.IDAO;
 import projetomvc.validators.ValidationResult;
-import projetomvc.validators.interfaces.Validator;
+import projetomvc.validators.interfaces.IValidator;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public abstract class BaseController<T> implements Controller<T> {
-    protected final DAO<T> dao;
-    protected final Validator<T> validator;
+public abstract class BaseController<T> implements IController<T> {
+    protected final IDAO<T> dao;
+    protected final IValidator<T> validator;
 
-    public BaseController(DAO<T> dao, Validator<T> validator) {
+    public BaseController(IDAO<T> dao, IValidator<T> validator) {
         this.dao = dao;
         this.validator = validator;
     }

@@ -1,16 +1,16 @@
 package projetomvc.views;
 
-import projetomvc.views.interfaces.EntityView;
-import projetomvc.views.interfaces.ViewNavigator;
+import projetomvc.views.interfaces.IEntityView;
+import projetomvc.views.interfaces.IViewNavigator;
 
 /**
  *
  * @author samuel
  */
-public class MainView<T, K> extends javax.swing.JFrame implements ViewNavigator<T, K> {
+public class MainView<T, K> extends javax.swing.JFrame implements IViewNavigator<T, K> {
 
-    private EntityView<T> authorsView;
-    private EntityView<K> booksView;
+    private IEntityView<T> authorsView;
+    private IEntityView<K> booksView;
 
     private javax.swing.JLabel labelHeader;
     private javax.swing.JButton manageAuthorsButton;
@@ -35,11 +35,11 @@ public class MainView<T, K> extends javax.swing.JFrame implements ViewNavigator<
         this.authorsView.setVisible(true);
     }
 
-    public void setBooksView(EntityView<K> booksView) {
+    public void setBooksView(IEntityView<K> booksView) {
         this.booksView = booksView;
     }
 
-    public void setAuthorsView(EntityView<T> authorsView) {
+    public void setAuthorsView(IEntityView<T> authorsView) {
         this.authorsView = authorsView;
     }
 

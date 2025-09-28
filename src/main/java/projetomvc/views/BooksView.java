@@ -6,10 +6,10 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import projetomvc.controllers.interfaces.Controller;
+import projetomvc.controllers.interfaces.IController;
 import projetomvc.models.entities.Author;
 import projetomvc.models.entities.Book;
-import projetomvc.views.interfaces.ViewNavigator;
+import projetomvc.views.interfaces.IViewNavigator;
 
 /**
  *
@@ -24,7 +24,7 @@ public class BooksView extends BaseView<Author, Book, Book> {
     private javax.swing.JTextField fieldPublishedYear;
     private javax.swing.JComboBox<String> comboBoxAuthors;
 
-    public BooksView(ViewNavigator<Author, Book> navigator, Controller<Author> authorController, Controller<Book> bookController) {
+    public BooksView(IViewNavigator<Author, Book> navigator, IController<Author> authorController, IController<Book> bookController) {
         super(new JTextField[] {}, navigator, authorController, bookController);
         initComponents();
         super.textFields = new JTextField[] { this.fieldTitle, this.fieldPublishedYear };

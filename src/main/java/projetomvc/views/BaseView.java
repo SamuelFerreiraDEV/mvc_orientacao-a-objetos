@@ -7,17 +7,17 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import projetomvc.controllers.interfaces.Controller;
+import projetomvc.controllers.interfaces.IController;
 import projetomvc.models.entities.Author;
 import projetomvc.models.entities.Book;
-import projetomvc.views.interfaces.EntityView;
-import projetomvc.views.interfaces.ViewNavigator;
+import projetomvc.views.interfaces.IEntityView;
+import projetomvc.views.interfaces.IViewNavigator;
 
-public abstract class BaseView<T, K, E> extends javax.swing.JFrame implements EntityView<E> {
+public abstract class BaseView<T, K, E> extends javax.swing.JFrame implements IEntityView<E> {
 	protected JTextField[] textFields;
     protected Integer selectedEntityId = null;
-	protected final ViewNavigator<T, K> navigator;
-    private final Map<Class<?>, Controller<?>> controllers = new HashMap<>();
+	protected final IViewNavigator<T, K> navigator;
+    private final Map<Class<?>, IController<?>> controllers = new HashMap<>();
 
     protected javax.swing.JList<String> entitiesList;
     protected javax.swing.JButton buttonDelete;
@@ -33,7 +33,7 @@ public abstract class BaseView<T, K, E> extends javax.swing.JFrame implements En
     protected javax.swing.JPanel panelInput;
     protected javax.swing.JTextArea actionResultArea;
 
-    public BaseView(JTextField[] textFields, ViewNavigator<T, K> navigator, Controller<T> authorController, Controller<K> bookController) {
+    public BaseView(JTextField[] textFields, IViewNavigator<T, K> navigator, IController<T> authorController, IController<K> bookController) {
 		this.textFields = textFields;
 		this.navigator = navigator;
         this.controllers.put(Author.class, authorController);
@@ -128,8 +128,8 @@ public abstract class BaseView<T, K, E> extends javax.swing.JFrame implements En
     }
 
     @SuppressWarnings("unchecked")
-    protected <C> Controller<C> getController(Class<C> clazz) {
-        Controller<C> controller = (Controller<C>) controllers.get(clazz);
+    protected <C> IController<C> getController(Class<C> clazz) {
+        IController<C> controller = (IController<C>) controllers.get(clazz);
         if (controller == null) {
             throw new IllegalArgumentException("Controller não encontrado para classe " + clazz.getName());
         }

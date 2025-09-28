@@ -4,13 +4,13 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
-import projetomvc.models.dao.interfaces.DAO;
+import projetomvc.models.dao.interfaces.IDAO;
 import projetomvc.models.entities.Book;
-import projetomvc.services.interfaces.BookServiceInterface;
+import projetomvc.services.interfaces.IBookService;
 
-public class BookService extends BaseService<Book> implements BookServiceInterface<Book> {
+public class BookService extends BaseService<Book> implements IBookService<Book> {
 
-	public BookService(DAO<Book> bookDao) {
+	public BookService(IDAO<Book> bookDao) {
 		super(bookDao);
 	}
 

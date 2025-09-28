@@ -1,7 +1,7 @@
 package projetomvc.validators;
 
-import projetomvc.validators.interfaces.Validator;
+import projetomvc.validators.interfaces.IValidator;
 
-public abstract class BaseValidator<T> implements Validator<T> {
+public abstract class BaseValidator<T> implements IValidator<T> {
 	protected final ValidationResult result = new ValidationResult();
 }

@@ -6,10 +6,10 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import projetomvc.controllers.interfaces.Controller;
+import projetomvc.controllers.interfaces.IController;
 import projetomvc.models.entities.Author;
 import projetomvc.models.entities.Book;
-import projetomvc.views.interfaces.ViewNavigator;
+import projetomvc.views.interfaces.IViewNavigator;
 
 /**
  *
@@ -24,7 +24,7 @@ public class AuthorsView extends BaseView<Author, Book, Author> {
     private javax.swing.JTextField fieldHometown;
     private javax.swing.JTextField fieldBirthDate;
 
-    public AuthorsView(ViewNavigator<Author, Book> navigator, Controller<Author> authorController, Controller<Book> bookController) {
+    public AuthorsView(IViewNavigator<Author, Book> navigator, IController<Author> authorController, IController<Book> bookController) {
         super(new JTextField[] {}, navigator, authorController, bookController);
         initComponents();
         super.textFields = new JTextField[] { this.fieldName, this.fieldBirthDate, this.fieldHometown };

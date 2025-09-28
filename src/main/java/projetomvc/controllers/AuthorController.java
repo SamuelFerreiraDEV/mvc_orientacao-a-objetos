@@ -2,16 +2,16 @@ package projetomvc.controllers;
 
 import java.sql.SQLException;
 
-import projetomvc.models.dao.interfaces.DAO;
+import projetomvc.models.dao.interfaces.IDAO;
 import projetomvc.models.entities.Author;
 import projetomvc.models.entities.Book;
-import projetomvc.services.interfaces.BookServiceInterface;
-import projetomvc.validators.interfaces.Validator;
+import projetomvc.services.interfaces.IBookService;
+import projetomvc.validators.interfaces.IValidator;
 
 public class AuthorController extends BaseController<Author> {
-    private final BookServiceInterface<Book> bookService;
+    private final IBookService<Book> bookService;
 
-    public AuthorController(DAO<Author> dao, Validator<Author> validator, BookServiceInterface<Book> bookService) {
+    public AuthorController(IDAO<Author> dao, IValidator<Author> validator, IBookService<Book> bookService) {
         super(dao, validator);
         this.bookService = bookService;
     }
