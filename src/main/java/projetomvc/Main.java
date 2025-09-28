@@ -2,7 +2,7 @@ package projetomvc;
 
 import projetomvc.config.ApplicationInitializer;
 
-public class Library {
+public class Main {
     public static void main(String[] args) {
         ApplicationInitializer appInit = new ApplicationInitializer();
         appInit.initialize();
