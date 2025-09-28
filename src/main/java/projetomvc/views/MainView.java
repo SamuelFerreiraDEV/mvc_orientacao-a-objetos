@@ -9,7 +9,6 @@ import projetomvc.views.interfaces.ViewNavigator;
  */
 public class MainView<T, K> extends javax.swing.JFrame implements ViewNavigator<T, K> {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainView.class.getName());
     private EntityView<T> authorsView;
     private EntityView<K> booksView;
 

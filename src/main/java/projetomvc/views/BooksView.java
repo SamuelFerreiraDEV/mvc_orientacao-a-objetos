@@ -16,7 +16,6 @@ import projetomvc.views.interfaces.ViewNavigator;
  * @author samuel
  */
 public class BooksView extends BaseView<Author, Book, Book> {
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(BooksView.class.getName());
 
     private javax.swing.JLabel labelTitle;
     private javax.swing.JLabel labelAuthor;
