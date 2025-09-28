@@ -10,9 +10,9 @@ import java.util.List;
 
 import projetomvc.models.entities.Author;
 
-public class DatabaseAuthorDAO extends databaseDAO<Author>  {
+public class AuthorDAO extends BaseDAO<Author>  {
 
-    public DatabaseAuthorDAO(Connection connection) {
+    public AuthorDAO(Connection connection) {
       	super(connection);
     }
 

@@ -10,9 +10,9 @@ import java.util.List;
 
 import projetomvc.models.entities.Book;
 
-public class DatabaseBookDAO extends databaseDAO<Book> {
+public class BookDAO extends BaseDAO<Book> {
 
-    public DatabaseBookDAO(Connection connection) {
+    public BookDAO(Connection connection) {
       	super(connection);
     }
 

@@ -7,8 +7,8 @@ import projetomvc.connections.SQLiteConnector;
 import projetomvc.controllers.AuthorController;
 import projetomvc.controllers.BookController;
 import projetomvc.controllers.interfaces.Controller;
-import projetomvc.models.dao.database.DatabaseAuthorDAO;
-import projetomvc.models.dao.database.DatabaseBookDAO;
+import projetomvc.models.dao.database.AuthorDAO;
+import projetomvc.models.dao.database.BookDAO;
 import projetomvc.models.dao.interfaces.DAO;
 import projetomvc.models.entities.Author;
 import projetomvc.models.entities.Book;
@@ -29,8 +29,8 @@ public class Library {
             SQLiteConnector sqlite = new SQLiteConnector("Library");
             Connection connection = sqlite.getConnection();
 
-            DAO<Author> authorDB = new DatabaseAuthorDAO(connection);
-            DAO<Book> bookDB = new DatabaseBookDAO(connection);
+            DAO<Author> authorDB = new AuthorDAO(connection);
+            DAO<Book> bookDB = new BookDAO(connection);
             Validator<Author> authorValidator = new AuthorValidator();
             Validator<Book> bookValidator = new BookValidator();
             BookServiceInterface<Book> bookService = new BookService(bookDB);
