@@ -33,7 +33,6 @@ public class BooksView extends BaseView<Author, Book, Book> {
         super.displayEntities(true, true);
     }
 
-    @Override
     public void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {
         if (super.selectedEntityId != null) {
             Book book = super.getController(Book.class).show(super.selectedEntityId);
@@ -50,7 +49,6 @@ public class BooksView extends BaseView<Author, Book, Book> {
         }
     }
 
-    @Override
     public HashMap<String, String> buildParams() {
         HashMap<String, String> params = new HashMap<>();
         int authorId = this.getAuthorIdByName(this.comboBoxAuthors.getSelectedItem().toString());
@@ -62,7 +60,6 @@ public class BooksView extends BaseView<Author, Book, Book> {
         return params;
     }
 
-    @Override
     public void setEntitiesResult(List<Book> entities) {
         if (entities != null && !entities.isEmpty()) {
             this.actionResultArea.setText("Livros encontrados:\n");
@@ -75,7 +72,6 @@ public class BooksView extends BaseView<Author, Book, Book> {
         }
     }
 
-    @Override
     public void updateEntitiesList(List<Book> entities) {
         if (entities != null && !entities.isEmpty()) {
             this.entitiesList.setListData(entities.stream().map(entity -> entity.getId() + ": " + entity.getTitle()).toArray(String[]::new));
@@ -84,7 +80,6 @@ public class BooksView extends BaseView<Author, Book, Book> {
         }
     }
 
-    @Override
     public Book buildEntityFromInputs() {
         Book book = new Book();
         int authorId = this.getAuthorIdByName(this.comboBoxAuthors.getSelectedItem().toString());
@@ -117,7 +112,6 @@ public class BooksView extends BaseView<Author, Book, Book> {
         return -1;
     }
 
-    @Override
     public void displayActionResultText(String action, boolean success, Book book) {
         String result = "";
         switch (action) {
@@ -175,7 +169,6 @@ public class BooksView extends BaseView<Author, Book, Book> {
         }
     }
 
-    @Override
     public Class<Book> getEntityClass() {
         return Book.class;
     }

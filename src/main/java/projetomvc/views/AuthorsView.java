@@ -32,7 +32,6 @@ public class AuthorsView extends BaseView<Author, Book, Author> {
         super.displayEntities(true, true);
     }
 
-    @Override
     public void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {
         if (super.selectedEntityId != null) {
             Author author = super.getController(Author.class).show(super.selectedEntityId);
@@ -49,7 +48,6 @@ public class AuthorsView extends BaseView<Author, Book, Author> {
         }
     }
 
-    @Override
     public Author buildEntityFromInputs() {
         Author author = new Author();
 
@@ -60,7 +58,6 @@ public class AuthorsView extends BaseView<Author, Book, Author> {
         return author;
     }
 
-    @Override
     public void displayActionResultText(String action, boolean success, Author author) {
         String result = "";
         switch (action) {
@@ -77,7 +74,6 @@ public class AuthorsView extends BaseView<Author, Book, Author> {
         this.actionResultArea.setText(result);
     }
 
-    @Override
     public HashMap<String, String> buildParams() {
         HashMap<String, String> params = new HashMap<>();
         
@@ -88,7 +84,6 @@ public class AuthorsView extends BaseView<Author, Book, Author> {
         return params;
     }
 
-    @Override
     public void setEntitiesResult(List<Author> entities) {
         if (entities != null && !entities.isEmpty()) {
             this.actionResultArea.setText("Autores encontrados:\n");
@@ -118,7 +113,6 @@ public class AuthorsView extends BaseView<Author, Book, Author> {
         }
     }
 
-    @Override
     public Class<Author> getEntityClass() {
         return Author.class;
     }
