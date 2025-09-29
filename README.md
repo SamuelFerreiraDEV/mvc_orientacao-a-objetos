@@ -17,7 +17,11 @@ Seguindo o **Dependency Inversion Principle**, todas as dependências entre clas
 
 A utilização de **Generics** permite a criação de classes e métodos reutilizáveis.
 
+Exemplo da inicialização das classes, definidas como interfaces e recebidas por meio de injeção de dependência:
+
 ![Exemplo da inicialização das classes, definidas como interfaces e recebidas por meio de injeção de dependência](src/main/resources/readme/initializer.png)
+
+Exemplo do padrão de assinatura e construtor de uma classe abstrata, utilizando interfaces e generics:
 
 ![Exemplo do padrão de assinatura e construtor de uma classe abstrata, utilizando interfaces e generics](src/main/resources/readme/structure_example.png)
 
