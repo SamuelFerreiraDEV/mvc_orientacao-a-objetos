@@ -28,7 +28,7 @@ Exemplo do padrão de assinatura e construtor de uma classe abstrata, utilizando
 ![Exemplo do padrão de assinatura e construtor de uma classe abstrata, utilizando interfaces e generics](src/main/resources/readme/structure_example.png)
 
 Demonstração de uso:
-![Demonstração de uso](src/main/resources/readme/usage.png)
+![Demonstração de uso](src/main/resources/readme/usage.gif)
 
 ## Estrutura de Classes
 
