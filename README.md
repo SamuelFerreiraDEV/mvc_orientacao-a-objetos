@@ -2,7 +2,9 @@
 
 Aplicação Java que implementa a arquitetura MVC (Model-View-Controller) e segue os princípios SOLID, em forma de um sistema desktop de gerenciamento de biblioteca para cadastro de livros e autores.
 
-O projeto faz uso intenso de **Interfaces**, **Generics** e **Herança**, gerando uma estrutura modular e desacoplada, de fácil extensão e manutenção.
+O projeto é um **objeto de estudo com foco na qualidade de código** e não na utilidade da aplicação, sendo essa muito simples.
+
+O sistema faz uso intenso de **Interfaces**, **Generics** e **Herança**, gerando uma estrutura modular e desacoplada, de fácil extensão e manutenção.
 
 ## Principais Características
 
@@ -24,6 +26,9 @@ Exemplo da inicialização das classes, definidas como interfaces e recebidas po
 Exemplo do padrão de assinatura e construtor de uma classe abstrata, utilizando interfaces e generics:
 
 ![Exemplo do padrão de assinatura e construtor de uma classe abstrata, utilizando interfaces e generics](src/main/resources/readme/structure_example.png)
+
+Demonstração de uso:
+![Demonstração de uso](src/main/resources/readme/usage.png)
 
 ## Estrutura de Classes
 
